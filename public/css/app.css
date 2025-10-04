@@ -1,0 +1,78 @@
+/* Custom scrollbar for a more premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #b68f40;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a07d34;
+}
+
+/* Scroll Animation Classes */
+.animated-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.animated-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* A simple fade-in for the hero text, applied via JS in a real app but here for simplicity */
+@keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+}
+
+/* Custom SwiperJS Styles */
+
+/* Hero Slider */
+.hero-swiper .swiper-button-next,
+.hero-swiper .swiper-button-prev {
+    color: white;
+    transition: transform 0.2s ease;
+}
+.hero-swiper .swiper-button-next:hover,
+.hero-swiper .swiper-button-prev:hover {
+    transform: scale(1.2);
+}
+
+.hero-swiper .swiper-pagination-bullet {
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 10px;
+    height: 10px;
+    opacity: 0.8;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.hero-swiper .swiper-pagination-bullet-active {
+    background-color: #b68f40; /* Amber color */
+    transform: scale(1.2);
+}
+
+/* Bestsellers Carousel */
+.bestsellers-swiper .swiper-pagination-bestsellers .swiper-pagination-bullet {
+    background-color: #6b7280; /* Gray */
+}
+
+.bestsellers-swiper .swiper-pagination-bestsellers .swiper-pagination-bullet-active {
+    background-color: #b68f40; /* Amber color */
+}
+
