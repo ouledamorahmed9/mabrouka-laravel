@@ -76,3 +76,55 @@
     background-color: #b68f40; /* Amber color */
 }
 
+/* Add these new styles to your existing app.css file */
+
+/* Active thumbnail border */
+.product-swiper-thumbs .swiper-slide-thumb-active {
+    border-color: #b68f40; /* Amber color */
+}
+
+/* Prose styles for description */
+.prose {
+    line-height: 1.75;
+}
+.prose-invert {
+    color: #d1d5db; /* gray-300 */
+}
+
+/* Icon placeholder - for demonstration */
+/* You can replace these with actual SVG icons later */
+.icon-placeholder::before {
+    display: inline-block;
+    content: '★'; /* Example star icon */
+    font-size: 1.5rem;
+    line-height: 1;
+}
+.prose-styles h2 {
+    font-size: 1.875rem; /* 30px */
+    font-family: 'Cormorant Garamond', serif;
+    color: #f3f4f6; /* gray-100 */
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #4b5563; /* gray-600 */
+    padding-bottom: 0.5rem;
+}
+
+.prose-styles p {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75;
+    color: #d1d5db; /* gray-300 */
+    margin-bottom: 1.25em;
+}
+
+.prose-styles ul {
+    list-style-type: disc;
+    padding-left: 1.5em;
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75;
+    color: #d1d5db; /* gray-300 */
+    margin-bottom: 1.25em;
+}
+
+.prose-styles ul li {
+    margin-bottom: 0.5em;
+}

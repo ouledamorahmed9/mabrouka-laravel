@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/admin/dashboard'; // <-- MODIFICATION: Redirect to admin dashboard after login
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -35,6 +35,14 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            // === START OF ADDITION ===
+            // Add a new group for admin routes
+            Route::middleware(['web', 'auth'])
+                ->prefix('admin')
+                ->name('admin.')
+                ->group(base_path('routes/admin.php'));
+            // === END OF ADDITION ===
         });
     }
 

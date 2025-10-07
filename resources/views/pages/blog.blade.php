@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.public')
 
 @section('title', 'Le Journal')
 
@@ -13,17 +13,26 @@
             @foreach($blogPosts as $post)
                 <div class="animated-section">
                    <div class="bg-gray-800 rounded-lg shadow-2xl overflow-hidden group border border-gray-700">
-                        <img src="{{ $post['imageUrl'] }}" alt="{{ $post['title'] }}" class="w-full h-64 object-cover" />
+                        <a href="{{ route('blog.detail', ['slug' => $post->slug]) }}">
+                            <img src="{{ asset($post->image_url) }}" alt="{{ $post->title }}" class="w-full h-64 object-cover group-hover:opacity-80 transition-opacity" />
+                        </a>
                         <div class="p-6">
-                            <p class="text-xs text-gray-400 mb-2 uppercase">{{ $post['date'] }}</p>
-                            <h3 class="font-bold text-xl mb-3 text-white group-hover:text-amber-400 transition-colors font-serif">{{ $post['title'] }}</h3>
-                            <p class="text-gray-300 text-sm mb-4">{{ $post['excerpt'] }}</p>
-                            <a href="#" class="font-semibold text-amber-400 hover:underline">Lire la suite &rarr;</a>
+                            <p class="text-xs text-gray-400 mb-2 uppercase">{{ $post->date->format('d F Y') }}</p>
+                            <h3 class="font-bold text-xl mb-3 text-white group-hover:text-amber-400 transition-colors font-serif">{{ $post->title }}</h3>
+                            <p class="text-gray-300 text-sm mb-4">{{ $post->excerpt }}</p>
+                            <a href="{{ route('blog.detail', ['slug' => $post->slug]) }}" class="font-semibold text-amber-400 hover:underline">Lire la suite &rarr;</a>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+
+        {{-- === PAGINATION LINKS GO HERE === --}}
+        <div class="mt-16">
+            {{ $blogPosts->links() }}
+        </div>
+
     </div>
 </div>
 @endsection
+
