@@ -17,17 +17,17 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
-        'price',
         'description',
+        'price',
         'category',
-        'color',
-        'pieces',
-        'type',
+        'image_url',
+        'gallery',
+        'color',    // <-- ADDED
+        'pieces',   // <-- ADDED
+        'type',     // <-- ADDED
         'for_sale',
         'for_rent',
         'bestseller',
-        'image_url',
-        'gallery',
     ];
 
     /**
@@ -36,10 +36,10 @@ class Product extends Model
      * @var array<string, string>
      */
     protected $casts = [
+        'gallery' => 'array',
         'for_sale' => 'boolean',
         'for_rent' => 'boolean',
         'bestseller' => 'boolean',
-        'gallery' => 'array',
     ];
 }
 

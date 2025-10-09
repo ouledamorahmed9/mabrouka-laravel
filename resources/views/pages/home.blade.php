@@ -15,29 +15,34 @@
                     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $slider->image_url) }}')"></div>
                     <div class="absolute inset-0 bg-black/60"></div>
                     
-                    <div class="absolute inset-0 flex items-center justify-center text-white z-10">
+                    <div class="absolute inset-0 flex flex-col items-center justify-end text-center text-white pb-24">
                         <div class="text-center p-4 animate-fade-in-up">
-                            <h1 class="text-5xl md:text-7xl font-extrabold font-serif mb-2 tracking-wider">{{ $slider->title }}</h1>
+                            @if($slider->title)
+                                <h1 class="text-5xl md:text-7xl font-extrabold font-serif mb-5 tracking-wider">{{ $slider->title }}</h1>
+                            @endif
                             @if($slider->subtitle)
                                 <p class="text-2xl md:text-3xl mb-8 font-light">{{ $slider->subtitle }}</p>
                             @endif
-                            @if($slider->button_text && $slider->button_link)
-                                <a href="{{ $slider->button_link }}" class="bg-amber-400 text-black font-bold py-4 px-10 rounded-full hover:bg-amber-300 transform hover:scale-105 transition-all duration-300 uppercase tracking-wider">
-                                    {{ $slider->button_text }}
-                                </a>
-                            @endif
+                           <a href="{{ route('products') }}" class="bg-amber-400 text-black font-bold  py-4 px-10 rounded-full hover:bg-amber-300 transform hover:scale-105 transition-all duration-300 uppercase tracking-wider">
+                                Voir toute la collection
+                            </a>   
                         </div>
                     </div>
                 </div>
                 @empty
                 {{-- Fallback slide if no sliders are in the database --}}
                 <div class="swiper-slide relative">
-                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/hero-principal.jpg') }}')"></div>
+                    <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/backgroundimg.png') }}')"></div>
                     <div class="absolute inset-0 bg-black/60"></div>
-                     <div class="absolute inset-0 flex items-center justify-center text-white z-10">
+
+                    {{-- Content aligned to the bottom-center --}}
+                     <div class="absolute inset-0 flex flex-col items-center justify-end text-center text-white pb-24">
                         <div class="text-center p-4 animate-fade-in-up">
                             <h1 class="text-5xl md:text-7xl font-extrabold font-serif mb-2 tracking-wider">Mabrouka Fashion</h1>
                             <p class="text-2xl md:text-3xl mb-8 font-light">Robes Traditionnelles de Luxe</p>
+                            <a href="{{ route('products') }}" class="bg-amber-400 text-black font-bold py-4 px-10 rounded-full hover:bg-amber-300 transform hover:scale-105 transition-all duration-300 uppercase tracking-wider">
+                                Découvrir la collection
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -46,22 +51,12 @@
 
             </div>
 
-        <!-- Pagination & Navigation -->
-                <div class="swiper-pagination"></div>
-
-    </div>
-
-    <!-- Central Text Overlay (on top of all slides) -->
-    <div class="absolute inset-0 flex items-center justify-center text-white z-10">
-        <div class="text-center p-4 animate-fade-in-up">
-            <h1 class="text-5xl md:text-7xl font-extrabold font-serif mb-2 tracking-wider">Location & Vente</h1>
-            <p class="text-2xl md:text-3xl mb-8 font-light">Robes Traditionnelles de Luxe</p>
-            <a href="{{ route('products') }}" class="bg-amber-400 text-black font-bold py-4 px-10 rounded-full hover:bg-amber-300 transform hover:scale-105 transition-all duration-300 uppercase tracking-wider">
-                Découvrir la collection
-            </a>
+            <!-- Pagination & Navigation -->
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next text-white"></div>
+            <div class="swiper-button-prev text-white"></div>
         </div>
-    </div>
-</header>
+    </header>
 
 {{-- Services Section --}}
 <section class="py-20 md:py-28 bg-black">
@@ -118,6 +113,8 @@
     </div>
 </section>
 
+{{-- === BESTSELLERS SECTION === --}}
+@if($bestsellers->isNotEmpty())
 <section class="py-20 md:py-28 bg-gray-900">
     <div class="container mx-auto px-6">
         <div class="animated-section text-center mb-16">
@@ -150,6 +147,7 @@
         </div>
     </div>
 </section>
+@endif
 
 <section class="py-20 md:py-28 bg-black">
     <div class="container mx-auto px-6">
@@ -240,7 +238,8 @@
     </div>
 </section>
 
-{{-- Testimonials Section --}}
+{{-- === TESTIMONIALS SECTION === --}}
+@if(count($testimonials) > 0)
 <section class="py-20 md:py-28 bg-gray-900">
     <div class="container mx-auto px-6">
         <div class="animated-section text-center mb-16">
@@ -267,8 +266,39 @@
         </div>
     </div>
 </section>
+@endif
 
-{{-- Blog Section --}}
+{{-- === COLLABORATIONS SECTION === --}}
+@if($collaborations->isNotEmpty())
+<section class="py-20 md:py-28 bg-black">
+    <div class="container mx-auto px-6">
+        <div class="animated-section text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold font-serif text-white">Nos Partenaires de Confiance</h2>
+            <p class="mt-4 text-gray-400">Ils nous soutiennent et collaborent avec nous.</p>
+        </div>
+        
+        <div class="swiper collaborations-swiper">
+            <div class="swiper-wrapper">
+                @foreach($collaborations as $collaboration)
+                    <div class="swiper-slide">
+                        <button type="button" class="collaboration-logo-btn flex flex-col items-center justify-center space-y-6 group h-full"
+                                data-gallery-images="{{ json_encode($collaboration->gallery) }}"
+                                data-partner-name="{{ $collaboration->name }}">
+                            <div class="w-32 h-32 rounded-full bg-gray-800 border-2 border-gray-700 flex items-center justify-center p-2 group-hover:border-amber-400/50 transition-colors duration-300">
+                                <img src="{{ asset('storage/' . $collaboration->logo_url) }}" alt="{{ $collaboration->name }}" class="h-full w-full object-contain rounded-full grayscale group-hover:grayscale-0 transition-all duration-300">
+                            </div>
+                            <p class="text-gray-400 font-semibold text-center group-hover:text-white transition-colors duration-300">{{ $collaboration->name }}</p>
+                        </button>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- === BLOG SECTION === --}}
+@if($blogPosts->isNotEmpty())
 <section class="py-20 md:py-28 bg-black">
     <div class="container mx-auto px-6">
         <div class="animated-section text-center mb-16">
@@ -280,8 +310,7 @@
                 <div class="animated-section @if($loop->iteration > 2) hidden sm:hidden lg:block @endif">
                     <div class="bg-gray-800 rounded-lg shadow-2xl overflow-hidden group border border-gray-700 h-full flex flex-col">
                         <div class="overflow-hidden">
-                           {{-- === MODIFICATION: Correct image path === --}}
-                           <img src="{{ asset($post->image_url) }}" alt="{{ $post->title }}" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
+                           <img src="{{ asset('storage/' . $post->image_url) }}" alt="{{ $post->title }}" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-300" />
                         </div>
                         <div class="p-6 flex flex-col flex-grow">
                             <p class="text-xs text-gray-400 mb-2 uppercase">{{ $post->date->format('d F Y') }}</p>
@@ -301,8 +330,30 @@
         </div>
     </div>
 </section>
+@endif
 
-{{-- === SCRIPT BLOCK FOR ALL PAGE ANIMATIONS === --}}
+{{-- === START OF MODAL AND SCRIPT === --}}
+<!-- Collaboration Gallery Modal -->
+<div id="gallery-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
+    <div class="bg-gray-900 rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col relative border border-gray-700">
+        <div class="flex justify-between items-center p-4 border-b border-gray-800">
+            <h3 id="modal-partner-name" class="text-xl font-semibold text-white font-serif"></h3>
+            <button id="close-modal-btn" class="text-gray-400 hover:text-white text-3xl font-bold">&times;</button>
+        </div>
+        <div class="p-4 flex-grow overflow-hidden">
+            <div class="swiper modal-swiper h-full">
+                <div class="swiper-wrapper" id="modal-swiper-wrapper">
+                    <!-- Slides will be injected here by JavaScript -->
+                </div>
+                <div class="swiper-button-next text-white"></div>
+                <div class="swiper-button-prev text-white"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- SCRIPT BLOCK for all page animations --}}
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     
@@ -310,21 +361,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const heroSwiper = new Swiper('.hero-swiper', {
         loop: true,
         effect: 'fade',
-        fadeEffect: {
-            crossFade: true
-        },
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
+        fadeEffect: { crossFade: true },
+        autoplay: { delay: 5000, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
     });
 
     // Bestsellers Carousel Initialization
@@ -332,14 +372,8 @@ document.addEventListener("DOMContentLoaded", function() {
         loop: false,
         slidesPerView: 1,
         spaceBetween: 20,
-        autoplay: {
-            delay: 4000,
-            disableOnInteraction: false,
-        },
-        pagination: {
-            el: '.swiper-pagination-bestsellers',
-            clickable: true,
-        },
+        autoplay: { delay: 4000, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination-bestsellers', clickable: true },
         breakpoints: {
             640: { slidesPerView: 2, spaceBetween: 20 },
             1024: { slidesPerView: 3, spaceBetween: 30 },
@@ -354,9 +388,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!startTimestamp) startTimestamp = timestamp;
             const progress = Math.min((timestamp - startTimestamp) / duration, 1);
             obj.innerHTML = Math.floor(progress * (end - start) + start);
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            }
+            if (progress < 1) { window.requestAnimationFrame(step); }
         };
         window.requestAnimationFrame(step);
     };
@@ -375,9 +407,85 @@ document.addEventListener("DOMContentLoaded", function() {
                 }
             });
         }, { threshold: 0.5 });
-
         observer.observe(statsSection);
     }
+
+    // Collaborations Carousel Initialization
+    const collaborationsSwiper = new Swiper('.collaborations-swiper', {
+        loop: true,
+        slidesPerView: 2,
+        spaceBetween: 20,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        breakpoints: {
+            640: { slidesPerView: 3, spaceBetween: 30 },
+            768: { slidesPerView: 4, spaceBetween: 40 },
+            1024: { slidesPerView: 5, spaceBetween: 50 },
+            1280: { slidesPerView: 6, spaceBetween: 60 },
+        }
+    });
+
+    // Collaboration Modal Gallery Logic
+    const modal = document.getElementById('gallery-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalPartnerName = document.getElementById('modal-partner-name');
+    const modalSwiperWrapper = document.getElementById('modal-swiper-wrapper');
+    let modalSwiper = null;
+
+    const initModalSwiper = () => {
+        if (modalSwiper) { modalSwiper.destroy(true, true); }
+        modalSwiper = new Swiper('.modal-swiper', {
+            loop: true,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            pagination: { el: '.swiper-pagination', clickable: true },
+        });
+    };
+
+    document.querySelectorAll('.collaboration-logo-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const galleryImages = JSON.parse(this.dataset.galleryImages || '[]');
+            const partnerName = this.dataset.partnerName;
+
+            if (galleryImages && galleryImages.length > 0) {
+                modalPartnerName.textContent = partnerName;
+                modalSwiperWrapper.innerHTML = ''; 
+
+                galleryImages.forEach(imageSrc => {
+                    const slide = `
+                        <div class="swiper-slide flex items-center justify-center">
+                            <img src="/storage/${imageSrc}" class="max-h-[70vh] w-auto object-contain rounded-lg">
+                        </div>
+                    `;
+                    modalSwiperWrapper.insertAdjacentHTML('beforeend', slide);
+                });
+
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                initModalSwiper();
+            } else {
+                // If no gallery, try to open the website URL
+                const collaborationLink = this.closest('.swiper-slide').querySelector('a');
+                 if(collaborationLink && collaborationLink.href && !collaborationLink.href.endsWith('#')) {
+                    window.open(collaborationLink.href, '_blank');
+                }
+            }
+        });
+    });
+
+    const closeModal = () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modalSwiperWrapper.innerHTML = '';
+    };
+
+    closeModalBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) { closeModal(); }
+    });
 });
 </script>
 

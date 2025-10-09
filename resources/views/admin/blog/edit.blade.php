@@ -4,47 +4,37 @@
 
 @section('content')
     <div class="bg-white p-8 rounded-lg shadow-md">
-        <h1 class="text-2xl font-semibold mb-6">Edit: {{ $blogPost->title }}</h1>
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">Edit Blog Post</h1>
 
-        {{-- === THE FINAL CORRECTION IS IN THIS LINE === --}}
-        <form action="{{ route('admin.blog.update', ['blogPost' => $blogPost->id]) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.blog.update', $blogPost) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-
-            <div class="space-y-6">
-                
-                <div>
-                    <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
-                    <input type="text" name="title" id="title" value="{{ old('title', $blogPost->title) }}" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                </div>
-
-                <div>
-                    <label for="excerpt" class="block text-sm font-medium text-gray-700">Excerpt (Short Summary)</label>
-                    <textarea name="excerpt" id="excerpt" rows="3" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">{{ old('excerpt', $blogPost->excerpt) }}</textarea>
-                </div>
-
-                <div>
-                    <label for="content" class="block text-sm font-medium text-gray-700">Full Content</label>
-                    <textarea name="content" id="content" rows="10" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">{{ old('content', $blogPost->content) }}</textarea>
-                </div>
-
-                <div>
-                    <label for="image" class="block text-sm font-medium text-gray-700">Cover Image</label>
-                    <input type="file" name="image" id="image" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
-                    <p class="text-xs text-gray-500 mt-2">Leave blank to keep the current image.</p>
-                    
-                    @if($blogPost->image_url)
-                        <div class="mt-4">
-                            <p class="text-sm font-medium text-gray-600">Current Image:</p>
-                            <img src="{{ asset($blogPost->image_url) }}" alt="Current Image" class="mt-2 h-32 w-auto rounded-md">
-                        </div>
-                    @endif
-                </div>
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700 font-bold mb-2">Title</label>
+                <input type="text" name="title" id="title" class="w-full px-3 py-2 border rounded-lg" value="{{ old('title', $blogPost->title) }}" required>
             </div>
-              
-            <div class="mt-8 flex justify-end">
-                <a href="{{ route('admin.blog.index') }}" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 mr-4">Cancel</a>
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Update Post</button>
+            <div class="mb-4">
+                <label for="content" class="block text-gray-700 font-bold mb-2">Content</label>
+                <textarea name="content" id="content" rows="10" class="w-full px-3 py-2 border rounded-lg" required>{{ old('content', $blogPost->content) }}</textarea>
+            </div>
+             <div class="mb-4">
+                <label for="excerpt" class="block text-gray-700 font-bold mb-2">Excerpt (Short Summary)</label>
+                <textarea name="excerpt" id="excerpt" rows="3" class="w-full px-3 py-2 border rounded-lg">{{ old('excerpt', $blogPost->excerpt) }}</textarea>
+            </div>
+            <div class="mb-4">
+                <label for="image_url" class="block text-gray-700 font-bold mb-2">New Featured Image (Optional)</label>
+                <input type="file" name="image_url" id="image_url" class="w-full px-3 py-2 border rounded-lg">
+                <p class="text-sm text-gray-500 mt-2">Current Image:</p>
+                <img src="{{ asset('storage/' . $blogPost->image_url) }}" class="mt-2 h-24 w-auto rounded-md">
+            </div>
+            <div class="mb-6">
+                <label for="is_active" class="flex items-center">
+                    <input type="checkbox" name="is_active" id="is_active" class="form-checkbox h-5 w-5 text-blue-600" @if(old('is_active', $blogPost->is_active)) checked @endif>
+                    <span class="ml-2 text-gray-700">Published (Visible on site)</span>
+                </label>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">Update Post</button>
             </div>
         </form>
     </div>

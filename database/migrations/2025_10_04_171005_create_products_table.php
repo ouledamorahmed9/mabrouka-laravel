@@ -8,37 +8,35 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->decimal('price', 8, 2);
-            $table->text('description');
-            $table->string('category');
-            $table->string('color');
-            $table->integer('pieces')->default(1);
-            $table->string('type');
+            $table->text('description')->nullable();
+            $table->decimal('price', 8, 2)->nullable();
+            $table->string('category')->nullable();
+            $table->string('image_url');
+            $table->json('gallery')->nullable();
+            $table->string('color')->nullable();
+            $table->integer('pieces')->nullable();
+            $table->string('type')->nullable();
             $table->boolean('for_sale')->default(false);
             $table->boolean('for_rent')->default(false);
             $table->boolean('bestseller')->default(false);
-            $table->string('image_url');
-            $table->json('gallery')->nullable(); // Pour stocker une liste d'images
+            $table->boolean('is_active')->default(true); // Added here
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('products');
     }
 };
+

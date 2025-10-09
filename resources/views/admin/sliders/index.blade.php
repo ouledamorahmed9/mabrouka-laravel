@@ -4,49 +4,37 @@
 
 @section('content')
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-semibold text-gray-800">Homepage Sliders</h1>
-        <a href="{{ route('admin.sliders.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">+ Add New Slide</a>
+        <h1 class="text-2xl font-bold text-gray-800">Manage Sliders</h1>
+        <a href="{{ route('admin.sliders.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+            Add New Slider
+        </a>
     </div>
 
-    @if (session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-            <span class="block sm:inline">{{ session('success') }}</span>
-        </div>
-    @endif
-
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <table class="min-w-full leading-normal">
-            <thead>
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
                 <tr>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Image</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Title</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th scope="col" class="relative px-6 py-3"><span class="sr-only">Actions</span></th>
                 </tr>
             </thead>
-            <tbody>
-                @forelse ($sliders as $slider)
+            <tbody class="bg-white divide-y divide-gray-200">
+                @forelse($sliders as $slider)
                     <tr>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <img src="{{ asset('storage/' . $slider->image_url) }}" alt="{{ $slider->title }}" class="w-24 h-12 object-cover rounded">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $slider->title ?? 'N/A' }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <img src="{{ asset('storage/' . $slider->image_url) }}" alt="{{ $slider->title }}" class="h-12 w-auto rounded-md">
                         </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ $slider->title }}</p>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $slider->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                {{ $slider->is_active ? 'Active' : 'Inactive' }}
+                            </span>
                         </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
-                            @if($slider->is_active)
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
-                                </span>
-                            @else
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                    Inactive
-                                </span>
-                            @endif
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <form action="{{ route('admin.sliders.destroy', $slider->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
-                                <a href="{{ route('admin.sliders.edit', $slider->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-4">Edit</a>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <a href="{{ route('admin.sliders.edit', $slider) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                            <form action="{{ route('admin.sliders.destroy', $slider) }}" method="POST" class="inline-block ml-4" onsubmit="return confirm('Are you sure you want to delete this slider?');">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
@@ -55,9 +43,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="text-center py-10">
-                            <p class="text-gray-500">No sliders found. <a href="{{ route('admin.sliders.create') }}" class="text-blue-500 hover:underline">Add one now</a>.</p>
-                        </td>
+                        <td colspan="4" class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500">No sliders found.</td>
                     </tr>
                 @endforelse
             </tbody>

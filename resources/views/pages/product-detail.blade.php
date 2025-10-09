@@ -23,7 +23,11 @@
                 <!-- Main Swiper -->
                 <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper product-swiper-main rounded-lg overflow-hidden border border-gray-700 shadow-2xl">
                     <div class="swiper-wrapper">
-                        {{-- === MODIFICATION HERE === --}}
+                        {{-- === Main Image Slide === --}}
+                        <div class="swiper-slide bg-gray-900">
+                            <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" class="w-full h-[70vh] object-cover" />
+                        </div>
+                        {{-- === Gallery Image Slides === --}}
                         @if($product->gallery)
                             @foreach($product->gallery as $image)
                                 <div class="swiper-slide bg-gray-900">
@@ -39,7 +43,11 @@
                 <!-- Thumbnails Swiper -->
                 <div thumbsSlider="" class="swiper product-swiper-thumbs">
                     <div class="swiper-wrapper">
-                        {{-- === MODIFICATION HERE === --}}
+                        {{-- === Main Image Thumbnail === --}}
+                        <div class="swiper-slide rounded-md overflow-hidden cursor-pointer border-2 border-transparent transition-all duration-300 swiper-slide-thumb-active:border-amber-400">
+                            <img src="{{ asset('storage/' . $product->image_url) }}" alt="Thumbnail of {{ $product->name }}" class="w-full h-28 object-cover" />
+                        </div>
+                        {{-- === Gallery Image Thumbnails === --}}
                         @if($product->gallery)
                             @foreach($product->gallery as $image)
                                 <div class="swiper-slide rounded-md overflow-hidden cursor-pointer border-2 border-transparent transition-all duration-300 swiper-slide-thumb-active:border-amber-400">
@@ -56,7 +64,9 @@
                 <div>
                     <span class="bg-amber-400 text-black text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">{{ $product->category }}</span>
                     <h1 class="text-4xl md:text-5xl font-bold font-serif text-white mt-4 mb-3">{{ $product->name }}</h1>
-                    <p class="text-3xl font-serif text-amber-300">{{ number_format($product->price, 2) }} TND</p>
+                    @if($product->price > 0)
+                        <p class="text-3xl font-serif text-amber-300">{{ number_format($product->price, 2) }} TND</p>
+                    @endif
                 </div>
 
                 <!-- Attributes Grid -->
@@ -99,13 +109,13 @@
                 <!-- Description -->
                 <div class="border-t border-gray-800 pt-8">
                     <h3 class="text-2xl font-semibold font-serif text-white mb-4">Description</h3>
-                    <div class="text-gray-400 leading-relaxed prose prose-invert">{!! $product->description !!}</div>
+                    <div class="text-gray-400 leading-relaxed prose prose-invert">{!! nl2br(e($product->description)) !!}</div>
                 </div>
             </div>
         </div>
 
         <!-- ====== Vous pourriez aussi aimer ====== -->
-        @if(count($similarProducts) > 0)
+        @if(isset($similarProducts) && count($similarProducts) > 0)
         <div class="mt-24 pt-16 border-t border-gray-800">
             <div class="text-center mb-12 animated-section">
                 <h2 class="text-4xl font-bold font-serif text-white">Vous pourriez aussi aimer</h2>
@@ -120,7 +130,9 @@
                             </div>
                             <div class="p-5 text-center">
                                 <h3 class="font-semibold text-lg text-white font-serif group-hover:text-amber-400 transition-colors">{{ $similar->name }}</h3>
-                                <p class="text-amber-400">{{ number_format($similar->price, 2) }} TND</p>
+                                 @if($similar->price > 0)
+                                    <p class="text-amber-400">{{ number_format($similar->price, 2) }} TND</p>
+                                @endif
                             </div>
                         </a>
                     </div>

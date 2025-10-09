@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        {{-- === MODIFICATION: enctype="multipart/form-data" added here === --}}
+        {{-- The form now includes enctype="multipart/form-data" for file uploads --}}
         <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -35,13 +35,19 @@
                     <!-- Description -->
                     <div class="mb-4">
                         <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
-                        <textarea name="description" id="description" rows="5" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" required>{{ old('description') }}</textarea>
+                        <textarea name="description" id="description" rows="5" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('description') }}</textarea>
                     </div>
 
-                    <!-- Image Upload -->
+                    <!-- Main Image Upload -->
                     <div class="mb-4">
-                        <label for="image_url" class="block text-gray-700 font-bold mb-2">Product Image</label>
+                        <label for="image_url" class="block text-gray-700 font-bold mb-2">Image Principale</label>
                         <input type="file" name="image_url" id="image_url" class="w-full px-3 py-2 border rounded-lg" required>
+                    </div>
+
+                    {{-- === NEW: Gallery Image Upload === --}}
+                    <div class="mb-4">
+                        <label for="gallery" class="block text-gray-700 font-bold mb-2">Galerie d'images (sélection multiple)</label>
+                        <input type="file" name="gallery[]" id="gallery" class="w-full px-3 py-2 border rounded-lg" multiple>
                     </div>
                 </div>
 
@@ -50,46 +56,46 @@
                     <!-- Price -->
                     <div class="mb-4">
                         <label for="price" class="block text-gray-700 font-bold mb-2">Price (TND)</label>
-                        <input type="number" name="price" id="price" class="w-full px-3 py-2 border rounded-lg" value="{{ old('price') }}" required step="0.01">
+                        <input type="number" name="price" id="price" class="w-full px-3 py-2 border rounded-lg" value="{{ old('price') }}" step="0.01">
                     </div>
 
                     <!-- Category -->
                     <div class="mb-4">
                         <label for="category" class="block text-gray-700 font-bold mb-2">Category</label>
-                        <input type="text" name="category" id="category" class="w-full px-3 py-2 border rounded-lg" value="{{ old('category') }}" required>
+                        <input type="text" name="category" id="category" class="w-full px-3 py-2 border rounded-lg" value="{{ old('category') }}">
                     </div>
                     
                     <div class="grid grid-cols-2 gap-4">
                         <!-- Color -->
                         <div class="mb-4">
                             <label for="color" class="block text-gray-700 font-bold mb-2">Color</label>
-                            <input type="text" name="color" id="color" class="w-full px-3 py-2 border rounded-lg" value="{{ old('color') }}" required>
+                            <input type="text" name="color" id="color" class="w-full px-3 py-2 border rounded-lg" value="{{ old('color') }}">
                         </div>
                         <!-- Pieces -->
                         <div class="mb-4">
                             <label for="pieces" class="block text-gray-700 font-bold mb-2">Pieces</label>
-                            <input type="number" name="pieces" id="pieces" class="w-full px-3 py-2 border rounded-lg" value="{{ old('pieces', 1) }}" required>
+                            <input type="number" name="pieces" id="pieces" class="w-full px-3 py-2 border rounded-lg" value="{{ old('pieces', 1) }}">
                         </div>
                     </div>
 
                     <!-- Type -->
                     <div class="mb-4">
                         <label for="type" class="block text-gray-700 font-bold mb-2">Type</label>
-                        <input type="text" name="type" id="type" class="w-full px-3 py-2 border rounded-lg" value="{{ old('type') }}" required>
+                        <input type="text" name="type" id="type" class="w-full px-3 py-2 border rounded-lg" value="{{ old('type') }}">
                     </div>
 
                     <!-- Checkboxes -->
                     <div class="flex space-x-6 mt-6">
                         <label for="for_sale" class="flex items-center">
-                            <input type="checkbox" name="for_sale" id="for_sale" class="form-checkbox h-5 w-5 text-blue-600" checked>
+                            <input type="checkbox" name="for_sale" id="for_sale" class="form-checkbox h-5 w-5 text-blue-600" checked value="1">
                             <span class="ml-2 text-gray-700">For Sale</span>
                         </label>
                         <label for="for_rent" class="flex items-center">
-                            <input type="checkbox" name="for_rent" id="for_rent" class="form-checkbox h-5 w-5 text-blue-600">
+                            <input type="checkbox" name="for_rent" id="for_rent" class="form-checkbox h-5 w-5 text-blue-600" value="1">
                             <span class="ml-2 text-gray-700">For Rent</span>
                         </label>
                         <label for="bestseller" class="flex items-center">
-                            <input type="checkbox" name="bestseller" id="bestseller" class="form-checkbox h-5 w-5 text-blue-600">
+                            <input type="checkbox" name="bestseller" id="bestseller" class="form-checkbox h-5 w-5 text-blue-600" value="1">
                             <span class="ml-2 text-gray-700">Bestseller</span>
                         </label>
                     </div>
@@ -103,4 +109,3 @@
         </form>
     </div>
 @endsection
-

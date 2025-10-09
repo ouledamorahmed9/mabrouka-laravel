@@ -5,149 +5,145 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str; // Make sure Str is imported
-use Illuminate\View\View;
 
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the products.
+     * Display a listing of the resource.
      */
-    public function index(): View
+    public function index()
     {
         $products = Product::latest()->paginate(10);
         return view('admin.products.index', compact('products'));
     }
 
     /**
-     * Show the form for creating a new product.
+     * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function create()
     {
         return view('admin.products.create');
     }
 
     /**
-     * Store a newly created product in storage.
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'description' => 'required|string',
-            'category' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-            'pieces' => 'required|integer|min:1',
-            'type' => 'required|string|max:255',
-            'image_url' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+            'price' => 'nullable|numeric|min:0',
+            'category' => 'nullable|string|max:255',
+            'image_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'color' => 'nullable|string|max:255',
+            'pieces' => 'nullable|integer|min:0',
+            'type' => 'nullable|string|max:255',
         ]);
 
-        $imageName = time().'.'.$request->image_url->extension();
-        $request->image_url->storeAs('public/products', $imageName);
-        $imagePath = 'products/' . $imageName;
+        $data = $request->only(['name', 'description', 'price', 'category', 'color', 'pieces', 'type']);
+        $data['slug'] = Str::slug($request->name);
+        $data['for_sale'] = $request->has('for_sale');
+        $data['for_rent'] = $request->has('for_rent');
+        $data['bestseller'] = $request->has('bestseller');
 
-        // === START OF SLUG MODIFICATION ===
-        $slug = Str::slug($request->name);
-        $count = Product::where('slug', 'LIKE', $slug . '%')->count();
-        if ($count > 0) {
-            $slug = $slug . '-' . ($count + 1);
+        // Handle main image upload
+        if ($request->hasFile('image_url')) {
+            $data['image_url'] = $request->file('image_url')->store('products', 'public');
         }
-        // === END OF SLUG MODIFICATION ===
 
-        Product::create([
-            'name' => $request->name,
-            'slug' => $slug, // Use the new unique slug
-            'price' => $request->price,
-            'description' => $request->description,
-            'category' => $request->category,
-            'color' => $request->color,
-            'pieces' => $request->pieces,
-            'type' => $request->type,
-            'for_sale' => $request->has('for_sale'),
-            'for_rent' => $request->has('for_rent'),
-            'bestseller' => $request->has('bestseller'),
-            'image_url' => $imagePath,
-            'gallery' => [$imagePath],
-        ]);
+        // Handle gallery images upload
+        if ($request->hasFile('gallery')) {
+            $galleryPaths = [];
+            foreach ($request->file('gallery') as $file) {
+                $galleryPaths[] = $file->store('products/gallery', 'public');
+            }
+            $data['gallery'] = $galleryPaths;
+        }
+
+        Product::create($data);
 
         return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
+
     /**
-     * Show the form for editing the specified product.
+     * Show the form for editing the specified resource.
      */
-    public function edit(Product $product): View
+    public function edit(Product $product)
     {
         return view('admin.products.edit', compact('product'));
     }
 
     /**
-     * Update the specified product in storage.
+     * Update the specified resource in storage.
      */
     public function update(Request $request, Product $product)
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'price' => 'required|numeric|min:0',
-            'description' => 'required|string',
-            'category' => 'required|string|max:255',
-            'color' => 'required|string|max:255',
-            'pieces' => 'required|integer|min:1',
-            'type' => 'required|string|max:255',
-            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'description' => 'nullable|string',
+            'price' => 'nullable|numeric|min:0',
+            'category' => 'nullable|string|max:255',
+            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'color' => 'nullable|string|max:255',
+            'pieces' => 'nullable|integer|min:0',
+            'type' => 'nullable|string|max:255',
         ]);
 
-        $imagePath = $product->image_url;
+        $data = $request->only(['name', 'description', 'price', 'category', 'color', 'pieces', 'type']);
+        $data['slug'] = Str::slug($request->name);
+        $data['for_sale'] = $request->has('for_sale');
+        $data['for_rent'] = $request->has('for_rent');
+        $data['bestseller'] = $request->has('bestseller');
+
+
+        // Handle main image update
         if ($request->hasFile('image_url')) {
-            // Delete old image
+            // Delete old image if it exists
             if ($product->image_url) {
-                Storage::delete('public/' . $product->image_url);
+                Storage::disk('public')->delete($product->image_url);
             }
-            $imageName = time().'.'.$request->image_url->extension();
-            $request->image_url->storeAs('public/products', $imageName);
-            $imagePath = 'products/' . $imageName;
+            $data['image_url'] = $request->file('image_url')->store('products', 'public');
         }
 
-        // === START OF SLUG MODIFICATION (FOR UPDATES) ===
-        $slug = Str::slug($request->name);
-        // Check for duplicates, excluding the current product itself
-        $count = Product::where('slug', 'LIKE', $slug . '%')->where('id', '!=', $product->id)->count();
-        if ($count > 0) {
-            $slug = $slug . '-' . ($count + 1);
+        // Handle gallery images update
+        if ($request->hasFile('gallery')) {
+            $galleryPaths = $product->gallery ?? [];
+            foreach ($request->file('gallery') as $file) {
+                $galleryPaths[] = $file->store('products/gallery', 'public');
+            }
+            $data['gallery'] = $galleryPaths;
         }
-        // === END OF SLUG MODIFICATION ===
 
-        $product->update([
-            'name' => $request->name,
-            'slug' => $slug, // Use the new unique slug
-            'price' => $request->price,
-            'description' => $request->description,
-            'category' => $request->category,
-            'color' => $request->color,
-            'pieces' => $request->pieces,
-            'type' => $request->type,
-            'for_sale' => $request->has('for_sale'),
-            'for_rent' => $request->has('for_rent'),
-            'bestseller' => $request->has('bestseller'),
-            'image_url' => $imagePath,
-            'gallery' => [$imagePath], // You can build a gallery management feature later
-        ]);
+        $product->update($data);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 
+
     /**
-     * Remove the specified product from storage.
+     * Remove the specified resource from storage.
      */
     public function destroy(Product $product)
     {
+        // Delete the main image
         if ($product->image_url) {
-            Storage::delete('public/' . $product->image_url);
+            Storage::disk('public')->delete($product->image_url);
         }
-        $product->delete();
 
+        // Delete gallery images
+        if ($product->gallery) {
+            foreach ($product->gallery as $imagePath) {
+                Storage::disk('public')->delete($imagePath);
+            }
+        }
+        
+        $product->delete();
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }

@@ -8,30 +8,26 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('blog_posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->date('date');
-            $table->string('author');
-            $table->text('excerpt');
+            $table->text('content');
             $table->string('image_url');
-            $table->longText('content');
+            $table->text('excerpt')->nullable();
+            $table->timestamp('date')->nullable();
+            $table->boolean('is_active')->default(true); // Added here
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('blog_posts');
     }
