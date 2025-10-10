@@ -81,7 +81,9 @@
                            </div>
                            <div class="p-5 text-center">
                                <h3 class="font-semibold text-lg text-white font-serif">{{ $product->name }}</h3>
-                               <p class="text-amber-400">{{ number_format($product->price, 2) }} TND</p>
+@if($product->price > 0)
+    <p class="mt-1 text-lg font-medium text-white">{{ $product->price }} TND</p>
+@endif
                            </div>
                        </div>
                    </a>

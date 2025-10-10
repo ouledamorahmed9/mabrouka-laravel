@@ -19,30 +19,51 @@
 
         <div class="grid md:grid-cols-2 gap-12 lg:gap-16 items-start">
             
-            <!-- ====== Formulaire de contact ====== -->
             <div class="animated-section">
                 <form action="{{ route('contact.store') }}" method="POST" class="bg-gray-900 p-8 rounded-lg shadow-2xl space-y-6 border border-gray-700">
                     @csrf
-                     <h3 class="font-semibold text-2xl mb-4 text-white font-serif">Formulaire de contact</h3>
-                     <div>
+                    <h3 class="font-semibold text-2xl mb-4 text-white font-serif">Formulaire de contact</h3>
+                    
+                    <div>
                         <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Nom Complet</label>
-                        <input type="text" name="name" id="name" required class="mt-1 block w-full p-3 bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white transition-colors" />
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" required class="mt-1 block w-full p-3 bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white transition-colors" />
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
-                     <div>
+
+                    <div>
                         <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Adresse Email</label>
-                        <input type="email" name="email" id="email" required class="mt-1 block w-full p-3 bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white transition-colors" />
+                        <input type="email" name="email" id="email" value="{{ old('email') }}" required class="mt-1 block w-full p-3 bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white transition-colors" />
+                        <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
+
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-400">Numéro de téléphone</label>
+                        <input 
+                            type="tel" 
+                            name="phone" 
+                            id="phone" 
+                            autocomplete="tel" 
+                            inputmode="numeric" 
+                            pattern="[0-9\s\+\-\(\)]*"
+                            onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || ['+', '(', ')', '-', ' '].includes(event.key)"
+                            value="{{ old('phone') }}"
+                            class="mt-1 block w-full p-3 bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white transition-colors"
+                            required>
+                        <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                    </div>
+
                     <div>
                         <label for="message" class="block text-sm font-medium text-gray-400 mb-1">Votre Message</label>
-                        <textarea name="message" id="message" rows="5" required class="mt-1 block w-full p-3 bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white transition-colors"></textarea>
+                        <textarea name="message" id="message" rows="5" required class="mt-1 block w-full p-3 bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:ring-amber-500 focus:border-amber-500 text-white transition-colors">{{ old('message') }}</textarea>
+                        <x-input-error :messages="$errors->get('message')" class="mt-2" />
                     </div>
-                     <button type="submit" class="w-full bg-amber-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-amber-300 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 uppercase tracking-wider">
+                    
+                    <button type="submit" class="w-full bg-amber-400 text-black font-bold py-3 px-6 rounded-lg hover:bg-amber-300 transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 uppercase tracking-wider">
                         <span>Envoyer</span>
-                     </button>
+                    </button>
                 </form>
             </div>
 
-            <!-- ====== Informations de contact (RESTORED) ====== -->
             <div class="animated-section space-y-8">
                 <div class="space-y-6 bg-gray-900 p-8 rounded-lg border border-gray-700">
                     <div>
@@ -57,7 +78,6 @@
                 </div>
 
                 <div class="rounded-lg overflow-hidden shadow-lg h-80 border-2 border-gray-700">
-                    {{-- === UPDATED GOOGLE MAPS IFRAME === --}}
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3251.328325952704!2d9.45630577576562!3d35.0316762728286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fec33d7f363b9d%3A0xff97797030f8184b!2sCentre%20Mabrouka%20Fashion!5e0!3m2!1sfr!2stn!4v1716911291888!5m2!1sfr!2stn" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
@@ -66,4 +86,3 @@
     </div>
 </div>
 @endsection
-

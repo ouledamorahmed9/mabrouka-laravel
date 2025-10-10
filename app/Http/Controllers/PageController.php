@@ -14,6 +14,7 @@ class PageController extends Controller
     {
         $sliders = Slider::where('is_active', true)->get();
         $bestsellers = Product::where('bestseller', true)->where('is_active', true)->latest()->take(8)->get();
+        $newArrivals = Product::where('new_collection', true)->where('is_active', true)->latest()->take(8)->get(); // <-- ADD THIS LINE
         $blogPosts = BlogPost::where('is_active', true)->latest()->take(3)->get();
         $collaborations = Collaboration::where('is_active', true)->get();
 
@@ -40,7 +41,7 @@ class PageController extends Controller
         ];
 
 
-        return view('pages.home', compact('sliders', 'bestsellers', 'blogPosts', 'collaborations', 'testimonials'));
+        return view('pages.home', compact('sliders', 'bestsellers', 'newArrivals', 'blogPosts', 'collaborations', 'testimonials')); // <-- ADD 'newArrivals'
     }
 
     public function about()

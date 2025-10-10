@@ -41,14 +41,17 @@ class ProductController extends Controller
             'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'color' => 'nullable|string|max:255',
             'pieces' => 'nullable|integer|min:0',
-            'type' => 'nullable|string|max:255',
+            'type' => 'required|string|in:Femme,Homme,Enfant,Accessoire',
         ]);
 
         $data = $request->only(['name', 'description', 'price', 'category', 'color', 'pieces', 'type']);
         $data['slug'] = Str::slug($request->name);
-        $data['for_sale'] = $request->has('for_sale');
-        $data['for_rent'] = $request->has('for_rent');
-        $data['bestseller'] = $request->has('bestseller');
+        
+        // === CORRECTION APPLIQUÉE ICI ===
+        $data['bestseller'] = $request->input('bestseller', 0);
+        
+        $data['for_sale'] = $request->input('for_sale', 0);
+        $data['for_rent'] = $request->input('for_rent', 0);
 
         // Handle main image upload
         if ($request->hasFile('image_url')) {
@@ -92,19 +95,20 @@ class ProductController extends Controller
             'gallery.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'color' => 'nullable|string|max:255',
             'pieces' => 'nullable|integer|min:0',
-            'type' => 'nullable|string|max:255',
+            'type' => 'required|string|in:Femme,Homme,Enfant,Accessoire',
         ]);
 
         $data = $request->only(['name', 'description', 'price', 'category', 'color', 'pieces', 'type']);
         $data['slug'] = Str::slug($request->name);
-        $data['for_sale'] = $request->has('for_sale');
-        $data['for_rent'] = $request->has('for_rent');
-        $data['bestseller'] = $request->has('bestseller');
+
+        // === CORRECTION APPLIQUÉE ICI ===
+        $data['bestseller'] = $request->input('bestseller', 0);
+        $data['for_sale'] = $request->input('for_sale', 0);
+        $data['for_rent'] = $request->input('for_rent', 0);
 
 
         // Handle main image update
         if ($request->hasFile('image_url')) {
-            // Delete old image if it exists
             if ($product->image_url) {
                 Storage::disk('public')->delete($product->image_url);
             }
@@ -131,12 +135,10 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // Delete the main image
         if ($product->image_url) {
             Storage::disk('public')->delete($product->image_url);
         }
 
-        // Delete gallery images
         if ($product->gallery) {
             foreach ($product->gallery as $imagePath) {
                 Storage::disk('public')->delete($imagePath);
@@ -147,4 +149,3 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }
-

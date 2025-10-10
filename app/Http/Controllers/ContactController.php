@@ -1,27 +1,28 @@
 <?php
 
-namespace App\Http\Controllers; // <-- CORRECT NAMESPACE
+namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
-    /**
-     * Store a newly created contact message in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'message' => 'required|string',
+            'phone' => 'nullable|string|regex:/^[\+\s\d\(\)-]*$/|min:8|max:20', // MODIFIÉ
+            'message' => 'required|string|min:10',
         ]);
 
-        ContactMessage::create($request->all());
+        ContactMessage::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone, // AJOUTÉ
+            'message' => $request->message,
+        ]);
 
-        return redirect()->route('contact')
-                         ->with('success', 'Votre message a été envoyé avec succès ! Nous vous répondrons bientôt.');
+        return redirect()->back()->with('success', 'Votre message a bien été envoyé !');
     }
 }
-

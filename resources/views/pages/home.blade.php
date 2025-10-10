@@ -57,6 +57,70 @@
             <div class="swiper-button-prev text-white"></div>
         </div>
     </header>
+{{-- Highlighted Services Section --}}
+<section class="bg-gray-900 py-20 md:py-24">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+
+            {{-- Service 1: Réserver une Robe --}}
+            <div class="animated-section">
+                <div class="flex justify-center mb-5">
+                    <div class="bg-gray-800 rounded-full p-4 border-2 border-transparent group-hover:border-amber-400 transition-colors">
+                        {{-- SVG Icon for 'Calendar' --}}
+                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold font-serif text-white mb-3">Réserver Une Robe</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Essayez la robe de vos rêves en boutique. Prenez rendez-vous en ligne et bénéficiez de conseils personnalisés.</p>
+            </div>
+
+            {{-- Service 2: Commander et Retirer --}}
+            <div class="animated-section" style="animation-delay: 0.1s;">
+                <div class="flex justify-center mb-5">
+                    <div class="bg-gray-800 rounded-full p-4 border-2 border-transparent group-hover:border-amber-400 transition-colors">
+                        {{-- SVG Icon for 'Shopping Bag' --}}
+                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold font-serif text-white mb-3">Commander Et Retirer En Boutique</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Commandez votre robe en ligne et récupérez-la facilement dans notre boutique.</p>
+            </div>
+
+            {{-- Service 3: Livraison --}}
+            <div class="animated-section" style="animation-delay: 0.2s;">
+                <div class="flex justify-center mb-5">
+                    <div class="bg-gray-800 rounded-full p-4 border-2 border-transparent group-hover:border-amber-400 transition-colors">
+                        {{-- SVG Icon for 'Truck/Delivery' --}}
+                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold font-serif text-white mb-3">Livraison</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Nous livrons partout. Si vous êtes hors région, nous vous envoyons votre robe soigneusement préparée.</p>
+            </div>
+
+            {{-- Service 4: Emballage Élégant --}}
+            <div class="animated-section" style="animation-delay: 0.3s;">
+                <div class="flex justify-center mb-5">
+                    <div class="bg-gray-800 rounded-full p-4 border-2 border-transparent group-hover:border-amber-400 transition-colors">
+                        {{-- SVG Icon for 'Gift' --}}
+                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4H5z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold font-serif text-white mb-3">Emballage Élégant</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Chaque robe est soigneusement emballée avec goût, idéale pour offrir ou transporter sans souci.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 {{-- Services Section --}}
 <section class="py-20 md:py-28 bg-black">
@@ -112,6 +176,43 @@
         </div>
     </div>
 </section>
+{{-- === NEW ARRIVALS SECTION === --}}
+@if($newArrivals->isNotEmpty())
+<section class="py-20 md:py-28 bg-black">
+    <div class="container mx-auto px-6">
+        <div class="animated-section text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold font-serif text-white">Nouvelle Collection</h2>
+            <p class="mt-4 text-gray-400">Découvrez les dernières pièces de notre collection.</p>
+        </div>
+        
+        <div class="swiper new-arrivals-swiper animated-section">
+            <div class="swiper-wrapper pb-16">
+                @foreach($newArrivals as $product)
+                    <div class="swiper-slide">
+                        <a href="{{ route('product.detail', ['slug' => $product->slug]) }}" class="group block bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 h-full transition-all duration-300 hover:border-amber-400/50 hover:shadow-amber-400/20">
+                            <div class="relative overflow-hidden">
+                                <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105" />
+                                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="text-white font-bold py-2 px-6 rounded-full border-2 border-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 uppercase text-sm tracking-wider">
+                                        Voir détails
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-5 text-center">
+                                <h3 class="font-semibold text-lg text-white font-serif group-hover:text-amber-300 transition-colors">{{ $product->name }}</h3>
+                                @if($product->price > 0)
+                                    <p class="text-amber-400">{{ number_format($product->price, 2) }} TND</p>
+                                @endif
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+            <div class="swiper-pagination-new-arrivals text-center mt-8 relative"></div>
+        </div>
+    </div>
+</section>
+@endif
 
 {{-- === BESTSELLERS SECTION === --}}
 @if($bestsellers->isNotEmpty())
@@ -137,7 +238,9 @@
                             </div>
                             <div class="p-5 text-center">
                                 <h3 class="font-semibold text-lg text-white font-serif group-hover:text-amber-300 transition-colors">{{ $product->name }}</h3>
-                                <p class="text-amber-400">{{ number_format($product->price, 2) }} TND</p>
+@if($product->price > 0)
+    <p class="text-amber-400">{{ number_format($product->price, 2) }} TND</p>
+@endif
                             </div>
                         </a>
                     </div>
@@ -356,7 +459,20 @@
 {{-- SCRIPT BLOCK for all page animations --}}
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    
+        // New Arrivals Carousel Initialization
+    const newArrivalsSwiper = new Swiper('.new-arrivals-swiper', {
+        loop: false,
+        slidesPerView: 1,
+        spaceBetween: 20,
+        autoplay: { delay: 4500, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination-new-arrivals', clickable: true },
+        breakpoints: {
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            1024: { slidesPerView: 3, spaceBetween: 30 },
+            1280: { slidesPerView: 4, spaceBetween: 30 },
+        }
+    });
+
     // Hero Slider Initialization
     const heroSwiper = new Swiper('.hero-swiper', {
         loop: true,

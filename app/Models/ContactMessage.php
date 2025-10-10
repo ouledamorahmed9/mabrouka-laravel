@@ -12,6 +12,7 @@ class ContactMessage extends Model
             'name',
             'email',
             'message',
+            'phone', // Ajoutez cette ligne
             'is_read',
         ];
 }

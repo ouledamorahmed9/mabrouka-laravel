@@ -22,12 +22,14 @@ class Product extends Model
         'category',
         'image_url',
         'gallery',
-        'color',    // <-- ADDED
-        'pieces',   // <-- ADDED
-        'type',     // <-- ADDED
+        'bestseller',
+        'new_collection', // <-- ADD THIS LINE
         'for_sale',
         'for_rent',
-        'bestseller',
+        'is_active',
+        'color',
+        'pieces',
+        'type',
     ];
 
     /**
@@ -37,9 +39,10 @@ class Product extends Model
      */
     protected $casts = [
         'gallery' => 'array',
+        'bestseller' => 'boolean',
+        'new_collection' => 'boolean', // <-- ADD THIS LINE
         'for_sale' => 'boolean',
         'for_rent' => 'boolean',
-        'bestseller' => 'boolean',
+        'is_active' => 'boolean',
     ];
 }
-
