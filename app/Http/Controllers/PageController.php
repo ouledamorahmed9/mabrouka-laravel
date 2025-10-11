@@ -94,13 +94,18 @@ class PageController extends Controller
         if ($request->ajax()) {
             return view('pages.partials._products_grid', compact('products'))->render();
         }
+        if ($request->filled('style')) {
+            $query->where('style', $request->style);
+        }
 
         // For initial page load, get filter options and return the full view
         $categories = Product::where('is_active', true)->whereNotNull('category')->distinct()->pluck('category');
         $colors = Product::where('is_active', true)->whereNotNull('color')->distinct()->pluck('color');
         $types = Product::where('is_active', true)->whereNotNull('type')->distinct()->pluck('type');
+        // RÉCUPÉRER LA LISTE DES STYLES EXISTANTS
+        $styles = Product::where('is_active', true)->whereNotNull('style')->distinct()->pluck('style');
 
-        return view('pages.products', compact('products', 'categories', 'colors', 'types'));
+        return view('pages.products', compact('products', 'categories', 'colors', 'types', 'styles'));
     }
 
     public function productDetail($slug)
@@ -127,7 +132,17 @@ class PageController extends Controller
     {
         return view('pages.contact');
     }
-    
+        // AJOUTEZ CES DEUX MÉTHODES
+    public function shipping()
+    {
+        return view('pages.shipping');
+    }
+
+    public function faq()
+    {
+        return view('pages.faq');
+    }
+
     // Legal Pages
     public function terms()
     {

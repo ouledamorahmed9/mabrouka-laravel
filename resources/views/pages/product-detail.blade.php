@@ -19,7 +19,28 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             
             <!-- ====== Image Gallery ====== -->
-            <div class="animated-section space-y-4">
+            <div class="animated-section space-y-4 relative">
+                
+                {{-- === STICKERS (LOGIQUE AMÉLIORÉE) === --}}
+                <div class="absolute top-7 left-4 z-20 space-y-2">
+                    @if($product->new_collection)
+                        <span class="block bg-amber-500 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">Nouveau</span>
+                    @endif
+                    @if($product->style === 'Aaroussa')
+                        <span class="block bg-pink-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">Aaroussa</span>
+                    @endif
+                    @if($product->style === 'Hadhara')
+                        <span class="block bg-teal-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">Hadhara</span>
+                    @endif
+                    @if($product->for_sale)
+                        <span class="block bg-green-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">À Vendre</span>
+                    @endif
+                    @if($product->for_rent)
+                        <span class="block bg-blue-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">À Louer</span>
+                    @endif
+                </div>
+                {{-- === STICKERS END === --}}
+
                 <!-- Main Swiper -->
                 <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper product-swiper-main rounded-lg overflow-hidden border border-gray-700 shadow-2xl">
                     <div class="swiper-wrapper">
@@ -131,7 +152,7 @@
                             <div class="p-5 text-center">
                                 <h3 class="font-semibold text-lg text-white font-serif group-hover:text-amber-400 transition-colors">{{ $similar->name }}</h3>
                                  @if($similar->price > 0)
-                                    <p class="text-amber-400">{{ number_format($similar->price, 2) }} TND</p>
+                                     <p class="text-amber-400">{{ number_format($similar->price, 2) }} TND</p>
                                 @endif
                             </div>
                         </a>

@@ -24,6 +24,7 @@ class Product extends Model
         'gallery',
         'bestseller',
         'new_collection', // <-- ADD THIS LINE
+        'style',
         'for_sale',
         'for_rent',
         'is_active',

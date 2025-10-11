@@ -22,6 +22,8 @@ class BlogPost extends Model
         'image_url',
         'author',
         'date',
+        'is_active',
+
     ];
 
     /**
@@ -31,6 +33,7 @@ class BlogPost extends Model
      */
     protected $casts = [
         'date' => 'datetime',
+        'is_active' => 'boolean',
     ];
 }
 

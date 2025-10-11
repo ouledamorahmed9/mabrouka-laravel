@@ -17,7 +17,7 @@
             </div>
 
             <div class="mb-8 animated-section">
-                <img src="{{ asset($post->image_url) }}" alt="{{ $post['title'] }}" class="w-full h-auto rounded-lg shadow-2xl">
+                <img src="{{ asset('storage/' . $post->image_url) }}" alt="{{ $post['title'] }}" class="w-full h-auto rounded-lg shadow-2xl">
             </div>
 
             <div class="text-center text-gray-400 text-sm mb-4 animated-section">

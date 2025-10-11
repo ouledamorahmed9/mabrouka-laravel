@@ -14,7 +14,7 @@
                 <div class="animated-section">
                    <div class="bg-gray-800 rounded-lg shadow-2xl overflow-hidden group border border-gray-700">
                         <a href="{{ route('blog.detail', ['slug' => $post->slug]) }}">
-                            <img src="{{ asset($post->image_url) }}" alt="{{ $post->title }}" class="w-full h-64 object-cover group-hover:opacity-80 transition-opacity" />
+                            <img src="{{ asset('storage/' . $post->image_url) }}" alt="{{ $post->title }}" class="w-full h-64 object-cover group-hover:opacity-80 transition-opacity" />
                         </a>
                         <div class="p-6">
                             <p class="text-xs text-gray-400 mb-2 uppercase">{{ $post->date->format('d F Y') }}</p>

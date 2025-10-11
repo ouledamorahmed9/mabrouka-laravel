@@ -123,6 +123,12 @@
                                         @elseif($product->for_rent)
                                             <span class="block bg-blue-600 text-white text-xs font-bold uppercase px-2 py-1 rounded-md shadow-lg">À Louer</span>
                                         @endif
+                                            @if($product->style === 'Aaroussa')
+        <span class="block bg-pink-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">Aaroussa</span>
+    @elseif($product->style === 'Hadhara')
+        <span class="block bg-teal-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">Hadhara</span>
+    @endif
+
                                     </div>
                                     <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105" />
                                 </div>

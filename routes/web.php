@@ -29,6 +29,8 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 // === NEW LEGAL PAGE ROUTES ===
 Route::get('/terms-and-conditions', [PageController::class, 'terms'])->name('terms');
 Route::get('/privacy-policy', [PageController::class, 'privacy'])->name('privacy');
+Route::get('/expedition-livraison', [PageController::class, 'shipping'])->name('shipping');
+Route::get('/faq', [PageController::class, 'faq'])->name('faq');
 
 
 // Authenticated user routes

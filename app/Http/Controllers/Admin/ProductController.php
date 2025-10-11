@@ -44,7 +44,7 @@ class ProductController extends Controller
             'type' => 'required|string|in:Femme,Homme,Enfant,Accessoire',
         ]);
 
-        $data = $request->only(['name', 'description', 'price', 'category', 'color', 'pieces', 'type']);
+        $data = $request->only(['name', 'description', 'price', 'category', 'color', 'pieces', 'type','style']);
         $data['slug'] = Str::slug($request->name);
         
         // === CORRECTION APPLIQUÉE ICI ===
@@ -52,6 +52,8 @@ class ProductController extends Controller
         $data['new_collection'] = $request->input('new_collection', 0); // <-- LIGNE CORRIGÉE
         $data['for_sale'] = $request->input('for_sale', 0);
         $data['for_rent'] = $request->input('for_rent', 0);
+        $data['is_active'] = $request->input('is_active', 0); 
+
 
         // Handle main image upload
         if ($request->hasFile('image_url')) {
@@ -98,7 +100,7 @@ class ProductController extends Controller
             'type' => 'required|string|in:Femme,Homme,Enfant,Accessoire',
         ]);
 
-        $data = $request->only(['name', 'description', 'price', 'category', 'color', 'pieces', 'type']);
+        $data = $request->only(['name', 'description', 'price', 'category', 'color', 'pieces', 'type','style']);
         $data['slug'] = Str::slug($request->name);
 
         // === CORRECTION APPLIQUÉE ICI ===
@@ -106,7 +108,7 @@ class ProductController extends Controller
         $data['new_collection'] = $request->input('new_collection', 0); // <-- LIGNE CORRIGÉE
         $data['for_sale'] = $request->input('for_sale', 0);
         $data['for_rent'] = $request->input('for_rent', 0);
-
+        $data['is_active'] = $request->input('is_active', 0);
 
         // Handle main image update
         if ($request->hasFile('image_url')) {

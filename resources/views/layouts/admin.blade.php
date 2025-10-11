@@ -12,6 +12,8 @@
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+        {{-- === SCRIPT ALPIN.JS AJOUTÉ ICI === --}}
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
 </head>
 <body class="font-sans antialiased bg-gray-100">

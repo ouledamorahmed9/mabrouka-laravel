@@ -92,6 +92,32 @@
                             <input type="number" name="pieces" id="pieces" class="w-full px-3 py-2 border rounded-lg" value="{{ old('pieces', $product->pieces) }}">
                         </div>
                     </div>
+                    {{-- Published Toggle --}}
+<div class="mt-6 bg-gray-50 p-4 rounded-lg border">
+    <div x-data="{ toggled: {{ $product->is_active ? 'true' : 'false' }} }" class="flex items-center">
+        <label for="is_active" class="flex items-center cursor-pointer">
+            <div class="relative">
+                <input type="checkbox" id="is_active" name="is_active" class="sr-only" x-model="toggled" value="1" @if($product->is_active) checked @endif>
+                <div class="block bg-gray-200 w-14 h-8 rounded-full transition"></div>
+                <div class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition" :class="{ 'translate-x-full !bg-indigo-600': toggled }"></div>
+            </div>
+            <div class="ml-3">
+                <p class="text-sm font-medium text-gray-900">Publié (Visible sur le site)</p>
+                <p class="text-xs text-gray-500">Si désactivé, le produit sera un brouillon non visible par les clients.</p>
+            </div>
+        </label>
+    </div>
+</div>
+
+<!-- Style : Aroussa ou hadhra -->
+<div class="mt-4">
+    <label for="style" class="block text-sm font-medium text-gray-700">Style</label>
+    <select name="style" id="style" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        <option value="" @if(!$product->style) selected @endif>Aucun</option>
+        <option value="Aaroussa" @if($product->style == 'Aaroussa') selected @endif>Aaroussa</option>
+        <option value="Hadhara" @if($product->style == 'Hadhara') selected @endif>Hadhara</option>
+    </select>
+</div>
 
                     <!-- Type -->
 <div class="mt-4">

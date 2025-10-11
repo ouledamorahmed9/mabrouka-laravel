@@ -34,7 +34,7 @@ class BlogPostController extends Controller
         $data['slug'] = Str::slug($request->title);
         $data['date'] = now();
         $data['image_url'] = $request->file('image_url')->store('blog', 'public');
-        $data['is_active'] = $request->has('is_active'); // Add this line
+        $data['is_active'] = $request->input('is_active', 0);// Add this line
 
         BlogPost::create($data);
 
@@ -57,7 +57,7 @@ class BlogPostController extends Controller
 
         $data = $request->only(['title', 'content', 'excerpt']);
         $data['slug'] = Str::slug($request->title);
-        $data['is_active'] = $request->has('is_active'); // Add this line
+        $data['is_active'] = $request->input('is_active', 0); // Add this line
 
         if ($request->hasFile('image_url')) {
             if ($blogPost->image_url) {

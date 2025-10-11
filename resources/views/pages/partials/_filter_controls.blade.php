@@ -19,6 +19,13 @@
         @endforeach
     </select>
 </div>
+<!-- STYLE -->
+<select name="style" id="{{ $prefix }}style" onchange="this.form.submit()" class="w-full bg-gray-700 border-gray-600 rounded-md p-2 text-white focus:ring-amber-500 focus:border-amber-500">
+    <option value="">Tous les styles</option>
+    @foreach($styles as $style)
+        <option value="{{ $style }}" {{ request('style') == $style ? 'selected' : '' }}>{{ $style }}</option>
+    @endforeach
+</select>
 
 <!-- Filtre Type -->
 <div>

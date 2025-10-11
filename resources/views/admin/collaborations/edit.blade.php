@@ -15,10 +15,6 @@
                     <input type="text" name="name" id="name" value="{{ old('name', $collaboration->name) }}" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                 </div>
                 <div>
-                    <label for="website_url" class="block text-sm font-medium text-gray-700">Website URL (Optional)</label>
-                    <input type="url" name="website_url" id="website_url" value="{{ old('website_url', $collaboration->website_url) }}" placeholder="https://..." class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                </div>
-                <div>
                     <label for="logo" class="block text-sm font-medium text-gray-700">New Logo (Optional)</label>
                     <input type="file" name="logo" id="logo" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                     <p class="text-xs text-gray-500 mt-2">Current Logo:</p>
