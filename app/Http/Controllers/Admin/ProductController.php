@@ -49,7 +49,7 @@ class ProductController extends Controller
         
         // === CORRECTION APPLIQUÉE ICI ===
         $data['bestseller'] = $request->input('bestseller', 0);
-        
+        $data['new_collection'] = $request->input('new_collection', 0); // <-- LIGNE CORRIGÉE
         $data['for_sale'] = $request->input('for_sale', 0);
         $data['for_rent'] = $request->input('for_rent', 0);
 
@@ -103,6 +103,7 @@ class ProductController extends Controller
 
         // === CORRECTION APPLIQUÉE ICI ===
         $data['bestseller'] = $request->input('bestseller', 0);
+        $data['new_collection'] = $request->input('new_collection', 0); // <-- LIGNE CORRIGÉE
         $data['for_sale'] = $request->input('for_sale', 0);
         $data['for_rent'] = $request->input('for_rent', 0);
 
@@ -149,3 +150,4 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }
+

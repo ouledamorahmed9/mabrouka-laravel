@@ -14,11 +14,9 @@ class PageController extends Controller
     {
         $sliders = Slider::where('is_active', true)->get();
         $bestsellers = Product::where('bestseller', true)->where('is_active', true)->latest()->take(8)->get();
-        $newArrivals = Product::where('new_collection', true)->where('is_active', true)->latest()->take(8)->get(); // <-- ADD THIS LINE
+        $newArrivals = Product::where('new_collection', true)->where('is_active', true)->latest()->take(8)->get();
         $blogPosts = BlogPost::where('is_active', true)->latest()->take(3)->get();
         $collaborations = Collaboration::where('is_active', true)->get();
-
-        // Dummy data for testimonials, replace with a real model if you create one
         $testimonials = [
             [
                 'name' => 'Fatma K.',
@@ -39,9 +37,7 @@ class PageController extends Controller
                 'rating' => 5
             ]
         ];
-
-
-        return view('pages.home', compact('sliders', 'bestsellers', 'newArrivals', 'blogPosts', 'collaborations', 'testimonials')); // <-- ADD 'newArrivals'
+        return view('pages.home', compact('sliders', 'bestsellers', 'newArrivals', 'blogPosts', 'collaborations', 'testimonials'));
     }
 
     public function about()
@@ -49,34 +45,46 @@ class PageController extends Controller
         return view('pages.about');
     }
 
-    public function products()
+    public function products(Request $request)
     {
-        // 1. Get all active products, paginated
-        $products = Product::where('is_active', true)->latest()->paginate(12);
+        $query = Product::query()->where('is_active', true);
 
-        // 2. Get a unique list of all categories for the filter menu
-        $categories = Product::where('is_active', true)
-                                ->whereNotNull('category')
-                                ->distinct()
-                                ->pluck('category');
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+        if ($request->filled('color')) {
+            $query->where('color', $request->color);
+        }
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+        if ($request->filled('availability')) {
+            if ($request->availability === 'sale') {
+                $query->where('for_sale', true);
+            } elseif ($request->availability === 'rent') {
+                $query->where('for_rent', true);
+            }
+        }
+        if ($request->input('bestseller') === '1') {
+            $query->where('bestseller', true);
+        }
+        if ($request->input('new_collection') === '1') {
+            $query->where('new_collection', true);
+        }
+
+        $products = $query->latest()->paginate(12);
         
-        // 3. Get a unique list of all colors for the filter menu
-        $colors = Product::where('is_active', true)
-                            ->whereNotNull('color')
-                            ->distinct()
-                            ->pluck('color');
+        if ($request->ajax()) {
+            return view('pages.partials._products_grid', compact('products'))->render();
+        }
 
-        // === FIX APPLIED HERE ===
-        // 4. Get a unique list of all types for the filter menu
-        $types = Product::where('is_active', true)
-                        ->whereNotNull('type')
-                        ->distinct()
-                        ->pluck('type');
+        $categories = Product::where('is_active', true)->whereNotNull('category')->distinct()->pluck('category');
+        $colors = Product::where('is_active', true)->whereNotNull('color')->distinct()->pluck('color');
+        $types = Product::where('is_active', true)->whereNotNull('type')->distinct()->pluck('type');
 
-        // 5. Pass all variables to the view
         return view('pages.products', compact('products', 'categories', 'colors', 'types'));
     }
-
+    
     public function productDetail($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
@@ -102,7 +110,6 @@ class PageController extends Controller
         return view('pages.contact');
     }
     
-    // Legal Pages
     public function terms()
     {
         return view('pages.terms');
