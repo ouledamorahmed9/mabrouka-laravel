@@ -9,7 +9,6 @@
         <div class="swiper hero-swiper h-full">
             <div class="swiper-wrapper">
                 
-                {{-- === SLIDER IS NOW DYNAMIC === --}}
                 @forelse($sliders as $slider)
                 <div class="swiper-slide relative">
                     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('storage/' . $slider->image_url) }}')"></div>
@@ -25,17 +24,14 @@
                             @endif
                            <a href="{{ route('products') }}" class="bg-amber-400 text-black font-bold  py-4 px-10 rounded-full hover:bg-amber-300 transform hover:scale-105 transition-all duration-300 uppercase tracking-wider">
                                 Voir toute la collection
-                            </a>   
+                            </a>  
                         </div>
                     </div>
                 </div>
                 @empty
-                {{-- Fallback slide if no sliders are in the database --}}
                 <div class="swiper-slide relative">
                     <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('{{ asset('images/backgroundimg.png') }}')"></div>
                     <div class="absolute inset-0 bg-black/60"></div>
-
-                    {{-- Content aligned to the bottom-center --}}
                      <div class="absolute inset-0 flex flex-col items-center justify-end text-center text-white pb-24">
                         <div class="text-center p-4 animate-fade-in-up">
                             <h1 class="text-5xl md:text-7xl font-extrabold font-serif mb-2 tracking-wider">Mabrouka Fashion</h1>
@@ -47,168 +43,101 @@
                     </div>
                 </div>
                 @endforelse
-                {{-- === END OF DYNAMIC SLIDER === --}}
-
             </div>
-
-            <!-- Pagination & Navigation -->
             <div class="swiper-pagination"></div>
             <div class="swiper-button-next text-white"></div>
             <div class="swiper-button-prev text-white"></div>
         </div>
     </header>
+
 {{-- Highlighted Services Section --}}
 <section class="bg-gray-900 py-20 md:py-24">
     <div class="container mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center">
-
-            {{-- Service 1: Réserver une Robe --}}
+            {{-- Service 1 --}}
             <div class="animated-section">
                 <div class="flex justify-center mb-5">
-                    <div class="bg-gray-800 rounded-full p-4 border-2 border-transparent group-hover:border-amber-400 transition-colors">
-                        {{-- SVG Icon for 'Calendar' --}}
-                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
+                    <div class="bg-gray-800 rounded-full p-4">
+                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold font-serif text-white mb-3">Réserver Une Robe</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Essayez la robe de vos rêves en boutique. Prenez rendez-vous en ligne et bénéficiez de conseils personnalisés.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Prenez rendez-vous en ligne pour essayer la robe de vos rêves en boutique.</p>
             </div>
-
-            {{-- Service 2: Commander et Retirer --}}
+            {{-- Service 2 --}}
             <div class="animated-section" style="animation-delay: 0.1s;">
                 <div class="flex justify-center mb-5">
-                    <div class="bg-gray-800 rounded-full p-4 border-2 border-transparent group-hover:border-amber-400 transition-colors">
-                        {{-- SVG Icon for 'Shopping Bag' --}}
-                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
+                    <div class="bg-gray-800 rounded-full p-4">
+                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
                     </div>
                 </div>
-                <h3 class="text-xl font-semibold font-serif text-white mb-3">Commander Et Retirer En Boutique</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Commandez votre robe en ligne et récupérez-la facilement dans notre boutique.</p>
+                <h3 class="text-xl font-semibold font-serif text-white mb-3">Click & Collect</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Commandez en ligne et récupérez votre robe facilement dans notre boutique.</p>
             </div>
-
-            {{-- Service 3: Livraison --}}
+            {{-- Service 3 --}}
             <div class="animated-section" style="animation-delay: 0.2s;">
                 <div class="flex justify-center mb-5">
-                    <div class="bg-gray-800 rounded-full p-4 border-2 border-transparent group-hover:border-amber-400 transition-colors">
-                        {{-- SVG Icon for 'Truck/Delivery' --}}
-                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
+                    <div class="bg-gray-800 rounded-full p-4">
+                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold font-serif text-white mb-3">Livraison</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Nous livrons partout. Si vous êtes hors région, nous vous envoyons votre robe soigneusement préparée.</p>
+                <p class="text-gray-400 text-sm leading-relaxed">Nous livrons partout en Tunisie. Votre robe, soigneusement préparée, arrive chez vous.</p>
             </div>
-
-            {{-- Service 4: Emballage Élégant --}}
+            {{-- Service 4 --}}
             <div class="animated-section" style="animation-delay: 0.3s;">
                 <div class="flex justify-center mb-5">
-                    <div class="bg-gray-800 rounded-full p-4 border-2 border-transparent group-hover:border-amber-400 transition-colors">
-                        {{-- SVG Icon for 'Gift' --}}
-                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4H5z"></path>
-                        </svg>
+                    <div class="bg-gray-800 rounded-full p-4">
+                        <svg class="w-10 h-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4H5z"></path></svg>
                     </div>
                 </div>
                 <h3 class="text-xl font-semibold font-serif text-white mb-3">Emballage Élégant</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Chaque robe est soigneusement emballée avec goût, idéale pour offrir ou transporter sans souci.</p>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-{{-- Services Section --}}
-<section class="py-20 md:py-28 bg-black">
-    <div class="container mx-auto px-6">
-        <div class="animated-section text-center mb-16">
-            <h2 class="text-3xl md:text-4xl font-bold font-serif text-white">Nos Services</h2>
-            <div class="w-24 h-1 bg-amber-400 mx-auto mt-4 mb-6"></div>
-            <p class="mt-4 text-gray-400 max-w-3xl mx-auto">
-                Nous offrons des services de qualité pour répondre à tous vos besoins en robes traditionnelles, de la location à la vente, avec livraison partout en Tunisie.
-            </p>
-        </div>
-        <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-            <div class="animated-section p-8 bg-gray-900 rounded-lg shadow-2xl border border-gray-800 h-full">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0 bg-amber-400/10 text-amber-400 rounded-lg p-3">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-white font-serif">Location de robes traditionnelles tunisiennes</h3>
-                        <p class="mt-4 text-gray-400 leading-relaxed">
-                            Plongez dans l'élégance du patrimoine tunisien avec notre service de location de robes traditionnelles haut de gamme. Que ce soit pour un mariage, une soirée, une fête familiale ou une séance photo, nous mettons à votre disposition une sélection raffinée de robes artisanales, alliant tradition et modernité.
-                        </p>
-                    </div>
-                </div>
-                <ul class="mt-6 space-y-3 text-gray-300">
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Large choix de modèles traditionnels</li>
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Réservation en ligne/sur place</li>
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Livraison disponible</li>
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Essayage en boutique</li>
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Style, authenticité et confort garantis</li>
-                </ul>
-            </div>
-            <div class="animated-section p-8 bg-gray-900 rounded-lg shadow-2xl border border-gray-800 h-full">
-                <div class="flex items-start space-x-4">
-                    <div class="flex-shrink-0 bg-amber-400/10 text-amber-400 rounded-lg p-3">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-semibold text-white font-serif">Vente de robes traditionnelles tunisiennes</h3>
-                        <p class="mt-4 text-gray-400 leading-relaxed">
-                            En plus de la location, nous offrons la possibilité d'acheter nos robes coup de cœur. Que ce soit une pièce neuve ou une robe ayant été portée en location, chaque modèle est soigneusement entretenu et proposé à prix juste.
-                        </p>
-                    </div>
-                </div>
-                <ul class="mt-6 space-y-3 text-gray-300">
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Achat possible de robes mises en location</li>
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Liquidation de fin de saison — robes en excellent état - prix réduit</li>
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Collection unique, pièces artisanales</li>
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Disponibles en boutique ou sur commande</li>
-                    <li class="flex items-start"><span class="text-amber-400 mr-3 mt-1">&#10003;</span>Livraison partout en Tunisie et à l'international</li>
-                </ul>
+                <p class="text-gray-400 text-sm leading-relaxed">Chaque robe est emballée avec goût, idéale pour offrir ou transporter sans souci.</p>
             </div>
         </div>
     </div>
 </section>
-{{-- === NEW ARRIVALS SECTION === --}}
-@if($newArrivals->isNotEmpty())
+
+{{-- === NEW COLLECTION SECTION === --}}
+@if($new_collection->isNotEmpty())
 <section class="py-20 md:py-28 bg-black">
     <div class="container mx-auto px-6">
         <div class="animated-section text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold font-serif text-white">Nouvelle Collection</h2>
-            <p class="mt-4 text-gray-400">Découvrez les dernières pièces de notre collection.</p>
+            <p class="mt-4 text-gray-400">Découvrez les dernières pièces fraîchement arrivées.</p>
         </div>
         
-        <div class="swiper new-arrivals-swiper animated-section">
+        <div class="swiper new-collection-swiper animated-section">
             <div class="swiper-wrapper pb-16">
-                @foreach($newArrivals as $product)
-                    <div class="swiper-slide">
-                        <a href="{{ route('product.detail', ['slug' => $product->slug]) }}" class="group block bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 h-full transition-all duration-300 hover:border-amber-400/50 hover:shadow-amber-400/20">
-                            <div class="relative overflow-hidden">
-                                <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105" />
-                                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="text-white font-bold py-2 px-6 rounded-full border-2 border-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 uppercase text-sm tracking-wider">
-                                        Voir détails
-                                    </span>
+                @foreach($new_collection as $product)
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 h-full flex flex-col">
+                            <a href="{{ route('product.detail', ['slug' => $product->slug]) }}" class="group block">
+                                <div class="relative overflow-hidden">
+                                    <div class="absolute top-3 left-3 z-10 space-y-2">
+                                        @if($product->new_collection)
+                                            <span class="block bg-amber-500 text-white text-xs font-bold uppercase px-2 py-1 rounded-md shadow-lg">Nouvelle Collection</span>
+                                        @endif
+                                        @if($product->for_sale)
+                                            <span class="block bg-green-600 text-white text-xs font-bold uppercase px-2 py-1 rounded-md shadow-lg">À Vendre</span>
+                                        @elseif($product->for_rent)
+                                            <span class="block bg-blue-600 text-white text-xs font-bold uppercase px-2 py-1 rounded-md shadow-lg">À Louer</span>
+                                        @endif
+                                    </div>
+                                    <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105" />
                                 </div>
-                            </div>
-                            <div class="p-5 text-center">
-                                <h3 class="font-semibold text-lg text-white font-serif group-hover:text-amber-300 transition-colors">{{ $product->name }}</h3>
-                                @if($product->price > 0)
-                                    <p class="text-amber-400">{{ number_format($product->price, 2) }} TND</p>
-                                @endif
-                            </div>
-                        </a>
+                                <div class="p-5 text-center flex-grow flex flex-col justify-between">
+                                    <h3 class="font-semibold text-lg text-white font-serif group-hover:text-amber-300 transition-colors">{{ $product->name }}</h3>
+                                    @if($product->price > 0)
+                                        <p class="text-amber-400 mt-2">{{ number_format($product->price, 2) }} TND</p>
+                                    @endif
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 @endforeach
             </div>
-            <div class="swiper-pagination-new-arrivals text-center mt-8 relative"></div>
+            <div class="swiper-pagination-new-collection text-center mt-8 relative"></div>
         </div>
     </div>
 </section>
@@ -226,23 +155,30 @@
         <div class="swiper bestsellers-swiper animated-section">
             <div class="swiper-wrapper pb-16">
                 @foreach($bestsellers as $product)
-                    <div class="swiper-slide">
-                        <a href="{{ route('product.detail', ['slug' => $product->slug]) }}" class="group block bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 h-full transition-all duration-300 hover:border-amber-400/50 hover:shadow-amber-400/20">
-                            <div class="relative overflow-hidden">
-                                <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105" />
-                                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="text-white font-bold py-2 px-6 rounded-full border-2 border-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 uppercase text-sm tracking-wider">
-                                        Voir détails
-                                    </span>
+                    <div class="swiper-slide h-auto">
+                        <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700 h-full flex flex-col">
+                           <a href="{{ route('product.detail', ['slug' => $product->slug]) }}" class="group block">
+                                <div class="relative overflow-hidden">
+                                    <div class="absolute top-3 left-3 z-10 space-y-2">
+                                        @if($product->new_collection)
+                                            <span class="block bg-amber-500 text-white text-xs font-bold uppercase px-2 py-1 rounded-md shadow-lg">Nouvelle Collection</span>
+                                        @endif
+                                        @if($product->for_sale)
+                                            <span class="block bg-green-600 text-white text-xs font-bold uppercase px-2 py-1 rounded-md shadow-lg">À Vendre</span>
+                                        @elseif($product->for_rent)
+                                            <span class="block bg-blue-600 text-white text-xs font-bold uppercase px-2 py-1 rounded-md shadow-lg">À Louer</span>
+                                        @endif
+                                    </div>
+                                    <img src="{{ asset('storage/' . $product->image_url) }}" alt="{{ $product->name }}" class="w-full h-[500px] object-cover transition-transform duration-500 group-hover:scale-105" />
                                 </div>
-                            </div>
-                            <div class="p-5 text-center">
-                                <h3 class="font-semibold text-lg text-white font-serif group-hover:text-amber-300 transition-colors">{{ $product->name }}</h3>
-@if($product->price > 0)
-    <p class="text-amber-400">{{ number_format($product->price, 2) }} TND</p>
-@endif
-                            </div>
-                        </a>
+                                <div class="p-5 text-center flex-grow flex flex-col justify-between">
+                                    <h3 class="font-semibold text-lg text-white font-serif group-hover:text-amber-300 transition-colors">{{ $product->name }}</h3>
+                                    @if($product->price > 0)
+                                        <p class="text-amber-400 mt-2">{{ number_format($product->price, 2) }} TND</p>
+                                    @endif
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -251,6 +187,7 @@
     </div>
 </section>
 @endif
+
 
 <section class="py-20 md:py-28 bg-black">
     <div class="container mx-auto px-6">
@@ -482,20 +419,37 @@ document.addEventListener("DOMContentLoaded", function() {
         pagination: { el: '.swiper-pagination', clickable: true },
         navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
     });
+    // New Collection Swiper
+    if (document.querySelector('.new-collection-swiper')) {
+        const newCollectionSwiper = new Swiper('.new-collection-swiper', {
+            loop: false,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            autoplay: { delay: 4500, disableOnInteraction: false },
+            pagination: { el: '.swiper-pagination-new-collection', clickable: true },
+            breakpoints: {
+                640: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 30 },
+                1280: { slidesPerView: 4, spaceBetween: 30 },
+            }
+        });
+    }
 
     // Bestsellers Carousel Initialization
-    const bestsellersSwiper = new Swiper('.bestsellers-swiper', {
-        loop: false,
-        slidesPerView: 1,
-        spaceBetween: 20,
-        autoplay: { delay: 4000, disableOnInteraction: false },
-        pagination: { el: '.swiper-pagination-bestsellers', clickable: true },
-        breakpoints: {
-            640: { slidesPerView: 2, spaceBetween: 20 },
-            1024: { slidesPerView: 3, spaceBetween: 30 },
-            1280: { slidesPerView: 4, spaceBetween: 30 },
-        }
-    });
+    if (document.querySelector('.bestsellers-swiper')) {
+        const bestsellersSwiper = new Swiper('.bestsellers-swiper', {
+            loop: false,
+            slidesPerView: 1,
+            spaceBetween: 20,
+            autoplay: { delay: 4000, disableOnInteraction: false },
+            pagination: { el: '.swiper-pagination-bestsellers', clickable: true },
+            breakpoints: {
+                640: { slidesPerView: 2, spaceBetween: 20 },
+                1024: { slidesPerView: 3, spaceBetween: 30 },
+                1280: { slidesPerView: 4, spaceBetween: 30 },
+            }
+        });
+    }
 
     // Number count-up animation
     const animate = (obj, start, end, duration) => {
