@@ -145,6 +145,7 @@
             </div>
             <div class="swiper-pagination-new-collection text-center mt-8 relative"></div>
         </div>
+        
     </div>
 </section>
 @endif
@@ -323,10 +324,10 @@
             <p class="mt-4 text-gray-400">Ils nous soutiennent et collaborent avec nous.</p>
         </div>
         
-        <div class="swiper collaborations-swiper">
+        <div class="swiper collaborations-swiper mx-16 md:mx-24">
             <div class="swiper-wrapper">
                 @foreach($collaborations as $collaboration)
-                    <div class="swiper-slide">
+                    <div class="swiper-slide ">
                         <button type="button" class="collaboration-logo-btn flex flex-col items-center justify-center space-y-6 group h-full"
                                 data-gallery-images="{{ json_encode($collaboration->gallery) }}"
                                 data-partner-name="{{ $collaboration->name }}">
@@ -380,8 +381,8 @@
 
 {{-- === START OF MODAL AND SCRIPT === --}}
 <!-- Collaboration Gallery Modal -->
-<div id="gallery-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
-    <div class="bg-gray-900 rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col relative border border-gray-700">
+<div id="gallery-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4 ">
+    <div class="bg-gray-900 rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col relative border border-gray-700 ">
         <div class="flex justify-between items-center p-4 border-b border-gray-800">
             <h3 id="modal-partner-name" class="text-xl font-semibold text-white font-serif"></h3>
             <button id="close-modal-btn" class="text-gray-400 hover:text-white text-3xl font-bold">&times;</button>
