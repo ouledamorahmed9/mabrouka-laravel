@@ -6,6 +6,7 @@ use App\Models\Slider;
 use App\Models\Product;
 use App\Models\BlogPost;
 use App\Models\Collaboration;
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -20,32 +21,38 @@ class PageController extends Controller
 
         $blogPosts = BlogPost::where('is_active', true)->latest()->take(3)->get();
         $collaborations = Collaboration::where('is_active', true)->get();
-
+        $testimonials = Testimonial::where('is_active', 1)->latest()->get();
         // Dummy data for testimonials
-        $testimonials = [
-            [
-                'name' => 'Fatma K.',
-                'location' => 'Tunis, Tunisie',
-                'quote' => 'Une collection magnifique et un service client exceptionnel. J\'ai trouvé la robe parfaite pour mon mariage et je n\'aurais pas pu être plus heureuse. Merci Mabrouka Fashion!',
-                'rating' => 5
-            ],
-            [
-                'name' => 'Aisha B.',
-                'location' => 'Sfax, Tunisie',
-                'quote' => 'Les robes sont encore plus belles en personne. La qualité des tissus et le soin apporté aux détails sont incroyables. Je recommande vivement!',
-                'rating' => 5
-            ],
-            [
-                'name' => 'Mariem S.',
-                'location' => 'Sousse, Tunisie',
-                'quote' => 'J\'ai loué une robe pour une soirée et j\'ai reçu tellement de compliments. Le processus de location était simple et le personnel très serviable.',
-                'rating' => 5
-            ]
-        ];
+        // $testimonials = [
+        //     [
+        //         'name' => 'Fatma K.',
+        //         'location' => 'Tunis, Tunisie',
+        //         'quote' => 'Une collection magnifique et un service client exceptionnel. J\'ai trouvé la robe parfaite pour mon mariage et je n\'aurais pas pu être plus heureuse. Merci Mabrouka Fashion!',
+        //         'rating' => 5
+        //     ],
+        //     [
+        //         'name' => 'Aisha B.',
+        //         'location' => 'Sfax, Tunisie',
+        //         'quote' => 'Les robes sont encore plus belles en personne. La qualité des tissus et le soin apporté aux détails sont incroyables. Je recommande vivement!',
+        //         'rating' => 5
+        //     ],
+        //     [
+        //         'name' => 'Mariem S.',
+        //         'location' => 'Sousse, Tunisie',
+        //         'quote' => 'J\'ai loué une robe pour une soirée et j\'ai reçu tellement de compliments. Le processus de location était simple et le personnel très serviable.',
+        //         'rating' => 5
+        //     ]
+        // ];
 
         // === VARIABLE AJOUTÉE AU COMPACT POUR L'ENVOYER À LA VUE ===
-        return view('pages.home', compact('sliders', 'bestsellers', 'new_collection', 'blogPosts', 'collaborations', 'testimonials'));
-    }
+        return view('pages.home', compact(
+            'sliders',
+            'bestsellers',
+            'new_collection',
+            'blogPosts',
+            'collaborations',
+            'testimonials' // <-- Ajoutez la variable ici
+        ));    }
 
     public function about()
     {

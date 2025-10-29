@@ -145,6 +145,7 @@
             </div>
             <div class="swiper-pagination-new-collection text-center mt-8 relative"></div>
         </div>
+        
     </div>
 </section>
 @endif
@@ -284,35 +285,88 @@
     </div>
 </section>
 
-{{-- === TESTIMONIALS SECTION === --}}
-@if(count($testimonials) > 0)
-<section class="py-20 md:py-28 bg-gray-900">
+{{-- =================================================== --}}
+{{-- =============== TESTIMONIALS (BG Gris) ================ --}}
+{{-- =================================================== --}}
+
+{{-- On vérifie s'il y a des témoignages actifs à afficher --}}
+@if($testimonials->isNotEmpty())
+<section class="bg-gray-900 text-white py-16 md:py-24"> {{-- NOUVEAU: Fond bg-gray-900 --}}
     <div class="container mx-auto px-6">
+        <!-- Titre de la section (Police Serif comme les autres titres) -->
         <div class="animated-section text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold font-serif text-white">L'Avis de Nos Clientes</h2>
             <p class="mt-4 text-gray-400">Elles nous ont fait confiance et partagent leur expérience.</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-8">
-            @foreach($testimonials as $testimonial)
-                <div class="animated-section">
-                    <div class="bg-black p-8 rounded-lg shadow-2xl border border-gray-700 h-full flex flex-col">
-                        <div class="flex items-center mb-4 text-amber-400">
-                            @for ($i = 0; $i < $testimonial['rating']; $i++)
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                            @endfor
-                        </div>
-                        <p class="text-gray-300 italic mb-6 flex-grow">"{{ $testimonial['quote'] }}"</p>
-                        <div>
-                            <p class="font-bold text-white">{{ $testimonial['name'] }}</p>
-                            <p class="text-sm text-gray-500">{{ $testimonial['location'] }}</p>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </div>
+
+        <!-- Conteneur principal du slider -->
+        <div class="relative group animated-section">
+
+            <!-- Conteneur Swiper -->
+            <div class="swiper testimonials-swiper pb-4">
+                <div class="swiper-wrapper">
+
+                    {{-- Boucle sur chaque témoignage --}}
+                    @foreach($testimonials as $testimonial)
+                    <div class="swiper-slide h-auto px-2 py-4">
+                        {{-- Carte Témoignage (Style ajusté pour fond gris) --}}
+                        <div class="flex flex-col h-full bg-black rounded-lg shadow-lg overflow-hidden border border-gray-700"> {{-- NOUVEAU: bg-black pour contraster avec la section, border-gray-700 --}}
+
+                            <!-- Contenu du témoignage -->
+                            <div class="p-6 md:p-8 flex-grow">
+                                <!-- Icône de citation (Couleur Ambre) -->
+                                <svg class="w-8 h-8 text-amber-400 mb-4 opacity-70" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"></path><path d="M4.586 15H3a1 1 0 01-1-1V9a1 1 0 011-1h1.586l3-3a1 1 0 011.414 0L10 6.586V3a1 1 0 011-1h1a1 1 0 011 1v3.586l1.293-1.293a1 1 0 011.414 0l3 3H19a1 1 0 011 1v5a1 1 0 01-1 1h-1.586l-3 3a1 1 0 01-1.414 0L12 15.414V19a1 1 0 01-1 1h-1a1 1 0 01-1-1v-3.586l-1.293 1.293a1 1 0 01-1.414 0l-3-3z"></path></svg>
+
+                                {{-- Texte de la citation (Gris clair standard, police par défaut) --}}
+                                <p class="text-base md:text-lg text-gray-300 italic mb-6 leading-relaxed line-clamp-5">
+                                    "{{ $testimonial->content }}"
+                                </p>
+                            </div>
+
+                            <!-- Pied de carte (Auteur & Note) -->
+                            <div class="flex-shrink-0 flex items-center p-6 bg-gray-800 border-t border-gray-700"> {{-- NOUVEAU: bg-gray-800 pour le pied, border-gray-700 --}}
+                                <!-- Avatar -->
+                                <img class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover mr-4 border-2 border-gray-600" {{-- NOUVEAU: Bordure grise plus claire --}}
+                                     src="{{ $testimonial->image ? asset('storage/' . $testimonial->image) : 'https://placehold.co/100x100/4B5563/FFFFFF?text=' . substr($testimonial->name, 0, 1) }}"
+                                     alt="Photo de {{ $testimonial->name }}">
+
+                                <div class="flex-grow">
+                                    <!-- Nom de l'auteur (Police Serif comme les titres) -->
+                                    <p class="text-lg md:text-xl font-semibold font-serif text-white">{{ $testimonial->name }}</p>
+
+                                    <!-- Étoiles (Couleur Ambre pour remplies, Gris moyen pour vides) -->
+                                    <div class="flex items-center mt-1">
+                                        @for ($i = 0; $i < 5; $i++)
+                                            <svg class="w-4 h-4 md:w-5 md:h-5 {{ $i < $testimonial->rating ? 'text-amber-400' : 'text-gray-500' }}" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+                        </div> {{-- Fin de la carte --}}
+                    </div> {{-- Fin du swiper-slide --}}
+                    @endforeach {{-- Fin de la boucle --}}
+
+                </div> {{-- Fin du swiper-wrapper --}}
+            </div> {{-- Fin du swiper container --}}
+
+            <!-- Flèches de navigation (inchangées) -->
+            <button id="testimonials-prev" class="absolute top-1/2 left-0 md:-left-5 transform -translate-y-1/2 z-10 p-3 bg-black bg-opacity-60 rounded-full text-white hover:bg-amber-400 hover:text-black transition-all duration-300 opacity-0 group-hover:opacity-100 focus:outline-none scale-90">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <button id="testimonials-next" class="absolute top-1/2 right-0 md:-right-5 transform -translate-y-1/2 z-10 p-3 bg-black bg-opacity-60 rounded-full text-white hover:bg-amber-400 hover:text-black transition-all duration-300 opacity-0 group-hover:opacity-100 focus:outline-none scale-90">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+
+        </div> {{-- Fin du relative group --}}
+    </div> {{-- Fin du container --}}
 </section>
 @endif
+{{-- Fin de la condition @if($testimonials->isNotEmpty()) --}}
+
+{{-- =================================================== --}}
+{{-- ========= FIN DE LA SECTION TESTIMONIALS ========== --}}
+{{-- =================================================== --}}
+
 
 {{-- === COLLABORATIONS SECTION === --}}
 @if($collaborations->isNotEmpty())
@@ -323,10 +377,10 @@
             <p class="mt-4 text-gray-400">Ils nous soutiennent et collaborent avec nous.</p>
         </div>
         
-        <div class="swiper collaborations-swiper">
+        <div class="swiper collaborations-swiper mx-8 md:mx-24">
             <div class="swiper-wrapper">
                 @foreach($collaborations as $collaboration)
-                    <div class="swiper-slide">
+                    <div class="swiper-slide ">
                         <button type="button" class="collaboration-logo-btn flex flex-col items-center justify-center space-y-6 group h-full"
                                 data-gallery-images="{{ json_encode($collaboration->gallery) }}"
                                 data-partner-name="{{ $collaboration->name }}">
@@ -345,7 +399,7 @@
 
 {{-- === BLOG SECTION === --}}
 @if($blogPosts->isNotEmpty())
-<section class="py-20 md:py-28 bg-black">
+<section class="py-20 md:py-28 bg-gray-900">
     <div class="container mx-auto px-6">
         <div class="animated-section text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold font-serif text-white">Le Journal</h2>
@@ -380,8 +434,8 @@
 
 {{-- === START OF MODAL AND SCRIPT === --}}
 <!-- Collaboration Gallery Modal -->
-<div id="gallery-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4">
-    <div class="bg-gray-900 rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col relative border border-gray-700">
+<div id="gallery-modal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center p-4 ">
+    <div class="bg-gray-900 rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col relative border border-gray-700 ">
         <div class="flex justify-between items-center p-4 border-b border-gray-800">
             <h3 id="modal-partner-name" class="text-xl font-semibold text-white font-serif"></h3>
             <button id="close-modal-btn" class="text-gray-400 hover:text-white text-3xl font-bold">&times;</button>
@@ -415,7 +469,41 @@ document.addEventListener("DOMContentLoaded", function() {
             1280: { slidesPerView: 4, spaceBetween: 30 },
         }
     });
+    // --- NOUVEAU : Initialisation du slider Témoignages ---
+    const testimonialsSwiper = new Swiper('.testimonials-swiper', {
+        // Affiche 1 slide sur mobile par défaut
+        slidesPerView: 1,
+        spaceBetween: 30, // Espace entre les slides
 
+        // Boucle infinie pour que le slider recommence
+        loop: true,
+
+        // Garder l'autoplay que vous préférez
+        autoplay: {
+            delay: 5000, // Défile toutes les 5 secondes
+            disableOnInteraction: false, // Continue même si l'utilisateur interagit
+        },
+
+        // Lier les flèches de navigation que nous avons ajoutées en HTML
+        navigation: {
+            nextEl: '#testimonials-next', // ID du bouton "suivant"
+            prevEl: '#testimonials-prev', // ID du bouton "précédent"
+        },
+
+        // Responsive : adapter le nombre de slides visibles selon la taille de l'écran
+        breakpoints: {
+            // A partir de 768px de large (tablettes)
+            768: {
+              slidesPerView: 2, // Affiche 2 slides
+              spaceBetween: 30,
+            },
+            // A partir de 1024px de large (ordinateurs)
+            1024: {
+              slidesPerView: 3, // Affiche 3 slides
+              spaceBetween: 40,
+            }
+        }
+    });
     // Hero Slider Initialization
     const heroSwiper = new Swiper('.hero-swiper', {
         loop: true,

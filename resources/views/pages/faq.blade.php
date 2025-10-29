@@ -1,50 +1,83 @@
 @extends('layouts.public')
 
-@section('title', 'Foire Aux Questions (FAQ)')
+@section('title', 'Foire Aux Questions')
 
 @section('content')
 <div class="bg-black text-white pt-28 md:pt-36 pb-24">
     <div class="container mx-auto px-6">
-        <header class="text-center mb-16 animated-section">
-            <h1 class="text-4xl md:text-5xl font-bold font-serif text-amber-300">Foire Aux Questions</h1>
-            <p class="mt-4 text-gray-400 max-w-3xl mx-auto">Trouvez les réponses aux questions les plus fréquemment posées.</p>
+        
+        {{-- Header --}}
+        <header class="text-center mb-20 animated-section">
+            <h1 class="text-4xl md:text-5xl font-bold font-serif text-amber-300">Foire aux Questions</h1>
+            <p class="mt-4 text-gray-400 max-w-3xl mx-auto">Retrouvez ici les réponses aux questions les plus fréquentes sur nos robes traditionnelles, la location, la vente et la livraison.</p>
         </header>
 
-        <div class="max-w-4xl mx-auto space-y-4 animated-section">
+        {{-- FAQ Accordion --}}
+        <div class="max-w-3xl mx-auto space-y-4 animated-section">
+
             <!-- Question 1 -->
-            <div x-data="{ open: false }" class="bg-gray-900 border border-gray-700 rounded-lg">
-                <button @click="open = !open" class="flex items-center justify-between w-full p-6">
-                    <h3 class="text-lg font-semibold text-white">Comment puis-je louer une robe ?</h3>
-                    <svg class="w-6 h-6 text-amber-400 transform transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div x-show="open" x-collapse class="px-6 pb-6 text-gray-400">
-                    <p>Pour louer une robe, parcourez notre collection, choisissez votre modèle préféré et contactez-nous via WhatsApp ou notre formulaire de contact pour vérifier la disponibilité et prendre un rendez-vous pour un essayage en boutique.</p>
+            <div x-data="{ open: true }" class="bg-gray-900 border border-gray-800 rounded-lg">
+                <h2>
+                    <button @click="open = !open" type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-white">
+                        <span class="text-lg font-serif">1. Comment puis-je louer une robe traditionnelle ?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </h2>
+                <div x-show="open" x-collapse class="p-6 pt-0 text-gray-400">
+                    <p>Vous pouvez parcourir notre collection en ligne, choisir la robe qui vous plaît, puis nous contacter directement via la page du produit pour finaliser la location. Nous organiserons ensuite la livraison pour la date souhaitée.</p>
                 </div>
             </div>
 
             <!-- Question 2 -->
-            <div x-data="{ open: false }" class="bg-gray-900 border border-gray-700 rounded-lg">
-                <button @click="open = !open" class="flex items-center justify-between w-full p-6">
-                    <h3 class="text-lg font-semibold text-white">Quels sont les délais de livraison ?</h3>
-                    <svg class="w-6 h-6 text-amber-400 transform transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div x-show="open" x-collapse class="px-6 pb-6 text-gray-400">
-                    <p>Les délais de livraison varient en fonction de votre localisation. En Tunisie, la livraison standard prend entre 3 et 5 jours ouvrables, tandis que la livraison express prend 1 à 2 jours. Pour plus de détails, consultez notre page <a href="{{ route('shipping') }}" class="text-amber-400 hover:underline">Expédition et Livraison</a>.</p>
+            <div x-data="{ open: false }" class="bg-gray-900 border border-gray-800 rounded-lg">
+                <h2>
+                    <button @click="open = !open" type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-white">
+                        <span class="text-lg font-serif">2. Quelle est la durée maximale de location ?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </h2>
+                <div x-show="open" x-collapse class="p-6 pt-0 text-gray-400">
+                    <p>La durée standard de location est de 1 jour, mais nous sommes flexibles. Une extension est possible selon la disponibilité de la robe. Contactez-nous pour discuter de vos besoins spécifiques.</p>
                 </div>
             </div>
 
             <!-- Question 3 -->
-            <div x-data="{ open: false }" class="bg-gray-900 border border-gray-700 rounded-lg">
-                <button @click="open = !open" class="flex items-center justify-between w-full p-6">
-                    <h3 class="text-lg font-semibold text-white">Est-il possible d'acheter une robe mise en location ?</h3>
-                    <svg class="w-6 h-6 text-amber-400 transform transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div x-show="open" x-collapse class="px-6 pb-6 text-gray-400">
-                    <p>Oui, de nombreux modèles de notre collection de location sont également disponibles à la vente. Si vous avez un coup de cœur pour une robe, n'hésitez pas à nous le faire savoir. Nous proposons également des liquidations de fin de saison à des prix très attractifs.</p>
+            <div x-data="{ open: false }" class="bg-gray-900 border border-gray-800 rounded-lg">
+                <h2>
+                    <button @click="open = !open" type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-white">
+                        <span class="text-lg font-serif">3. Proposez-vous des retouches ou des personnalisations ?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </h2>
+                <div x-show="open" x-collapse class="p-6 pt-0 text-gray-400">
+                    <p>Oui, certaines de nos robes peuvent être ajustées pour garantir une coupe parfaite. Des personnalisations plus poussées sont également possibles sur demande. Veuillez nous contacter bien à l'avance pour connaître les options et les délais.</p>
                 </div>
             </div>
-            
+
+            <!-- Question 4 -->
+            <div x-data="{ open: false }" class="bg-gray-900 border border-gray-800 rounded-lg">
+                <h2>
+                    <button @click="open = !open" type="button" class="flex items-center justify-between w-full p-6 font-semibold text-left text-white">
+                        <span class="text-lg font-serif">4. Quels sont les modes de paiement acceptés ?</span>
+                        <svg class="w-6 h-6 transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </h2>
+                <div x-show="open" x-collapse class="p-6 pt-0 text-gray-400">
+                    <p>Nous acceptons une variété de modes de paiement pour votre commodité : paiements en espèces, par carte bancaire, PayPal, ainsi que par virement postal ou bancaire.</p>
+                </div>
+            </div>
         </div>
+
+        {{-- Call to Action --}}
+        <div class="mt-20 pt-12 border-t border-gray-800 text-center">
+            <h3 class="text-2xl font-serif font-semibold text-white">Vous avez d'autres questions ?</h3>
+            <p class="text-gray-400 mt-2 mb-6">Notre équipe est là pour vous aider. N’hésitez pas à nous contacter.</p>
+            <a href="{{ route('contact') }}" class="inline-block bg-amber-400 text-black font-bold py-3 px-8 rounded-full hover:bg-amber-300 transition-colors duration-300 transform hover:scale-105">
+                Contactez-nous
+            </a>
+        </div>
+
     </div>
 </div>
 @endsection
+

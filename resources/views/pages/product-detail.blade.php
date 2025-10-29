@@ -24,7 +24,7 @@
                 {{-- === STICKERS (LOGIQUE AMÉLIORÉE) === --}}
                 <div class="absolute top-7 left-4 z-20 space-y-2">
                     @if($product->new_collection)
-                        <span class="block bg-amber-500 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">Nouveau</span>
+                        <span class="block bg-amber-500 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">Nouvelle Collection</span>
                     @endif
                     @if($product->style === 'Aaroussa')
                         <span class="block bg-pink-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md shadow-lg">Aaroussa</span>
